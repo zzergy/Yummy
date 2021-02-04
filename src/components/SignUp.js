@@ -48,7 +48,6 @@ export default function SignUp() {
                 id="username"
                 label="Username"
                 name="username"
-                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>
@@ -71,11 +70,9 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>
-
               <TextField
                 variant="outlined"
                 required
@@ -84,10 +81,10 @@ export default function SignUp() {
                 label="Confirm password"
                 type="password"
                 id="confirmPassword"
-                autoComplete="current-password"
               />
             </Grid>
           </Grid>
+
           <Button
             type="submit"
             fullWidth
