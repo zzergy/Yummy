@@ -4,8 +4,8 @@ import { auth } from '../firebase';
 export const AuthenticationContext = React.createContext({
     currentUser: {},
     signUp: () => { },
-    // login: () => { },
     // logout: () => { },
+    login: () => { },
     // resetPassword: () => { },
     // updateEmail: () => { },
     // updatePassword: () => { },
@@ -33,13 +33,16 @@ export default function AuthenticationProvider({children}) {
             return auth.createUserWithEmailAndPassword(email, password);
         }
 
+        function login(email, password) {
+            return auth.signInWithEmailAndPassword(email, password);
+        }
     //---------------------------------------------------------------------
 
     const values = {
         currentUser,
         signUp,
-        // login,
         // logout,
+        login,
         // resetPassword,
         // updateEmail,
         // updatePassword
