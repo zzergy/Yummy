@@ -38,7 +38,7 @@ export default function SignUp() {
   const [error, setError] = useState({ didError: false, message: '' });
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const {signUp} = useContext(AuthenticationContext);
+  const { signUp } = useContext(AuthenticationContext);
 
   function handleChange(event) {
     //Set the state
@@ -51,9 +51,18 @@ export default function SignUp() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+
+
     //Check if the passwords match
     if (textFieldState.password !== textFieldState.confirmPassword) {
-      setError({ ...error, didError: true, message: 'Passwords must match' })
+      return setError({ ...error, didError: true, message: 'Passwords must match' })
+    } else {
+      setError({ ...error, didError: false, message: '' })
+    }
+
+    //Password must be atleast 6 digits
+    if (textFieldState.password.length < 6) {
+      return setError({ ...error, didError: true, message: 'Password must contain atleast 6 symbols' });
     } else {
       setError({ ...error, didError: false, message: '' })
     }
@@ -63,14 +72,13 @@ export default function SignUp() {
       setError({ ...error, message: '' });
       setLoading(true);
 
-
       //This will wait for the result and if it fails it goes to the catch
       await signUp(textFieldState.email, textFieldState.password);
 
       //Redirect to login upon sucsessfull registration
       history.push('/login');
     } catch {
-      setError({ ...error, message: 'Failed to Sign in' });
+      setError({ ...error, didError: true, message: 'Failed to Sign in' });
     }
     setLoading(false);
   }
@@ -116,7 +124,7 @@ export default function SignUp() {
                 helperText={error.message}
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
