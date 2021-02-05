@@ -88,19 +88,6 @@ export default function SignUp() {
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             {error.message.length !== 0 && <span>{error.message}</span>}
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                onChange={handleChange}
-              />
-            </Grid>
-
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
