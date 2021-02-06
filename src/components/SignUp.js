@@ -83,8 +83,8 @@ export default function SignUp() {
 
       //Redirect to login upon sucsessfull registration
       history.push('/login');
-    } catch {
-      setError({ ...error, didError: true, message: 'Failed to Sign in' });
+    } catch(signUpError) {
+      setError({ ...error, didError: true, message: signUpError.message });
     }
     setLoading(false);
   }
