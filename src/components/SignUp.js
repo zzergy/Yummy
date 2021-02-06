@@ -10,7 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthenticationContext } from '../context/AuthenticationContext';
+import { useSnackbar } from 'notistack';
 
+//Material ui theme settings
 const useStyles = makeStyles((theme) => ({
   //wrapper (main container)
   container: {
@@ -32,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function SignUp() {
   const classes = useStyles();
   const [textFieldState, setTextFieldState] = useState({
@@ -41,8 +45,12 @@ export default function SignUp() {
     confirmPassword: '',
   });
 
+
+
   const [error, setError] = useState({ didError: false, message: '' });
   const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const history = useHistory();
   const { signUp, signUpWithGoogle } = useContext(AuthenticationContext);
 
@@ -59,20 +67,20 @@ export default function SignUp() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    //Dismiss action for snackbar
+    const action = key => (
+      <Button onClick={() => { closeSnackbar(key) }} color='secondary'>
+        Dismiss
+      </Button>
+    );
+
     //Check if the passwords match
     if (textFieldState.password !== textFieldState.confirmPassword) {
       return setError({ ...error, didError: true, message: 'Passwords must match' })
     } else {
       setError({ ...error, didError: false, message: '' })
     }
-
-    //Password must be atleast 6 digits
-    if (textFieldState.password.length < 6) {
-      return setError({ ...error, didError: true, message: 'Password must contain atleast 6 symbols' });
-    } else {
-      setError({ ...error, didError: false, message: '' })
-    }
-
+  
     //SignUp
     try {
       setError({ ...error, message: '' });
@@ -83,8 +91,13 @@ export default function SignUp() {
 
       //Redirect to login upon sucsessfull registration
       history.push('/login');
-    } catch(signUpError) {
-      setError({ ...error, didError: true, message: signUpError.message });
+    } catch (signUpError) {
+      enqueueSnackbar(
+        signUpError.message, {
+        preventDuplicate: true,
+        persist: true,
+        action
+      });
     }
     setLoading(false);
   }
