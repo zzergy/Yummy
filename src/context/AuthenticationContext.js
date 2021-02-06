@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth } from '../firebase'; 
+import firebase from "firebase/app";
 
 export const AuthenticationContext = React.createContext({
     currentUser: {},
     signUp: () => { },
     login: () => { },
     logout: () => { },
+    signUpWithGoogle: () => { },
     // resetPassword: () => { },
     // updateEmail: () => { },
     // updatePassword: () => { },
 });
 
-export default function AuthenticationProvider({children}) {
+export default function AuthenticationProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
 
@@ -29,18 +31,23 @@ export default function AuthenticationProvider({children}) {
     }, []);
 
     //------------------------------ METHODS ------------------------------
-        function signUp(email, password) {
-            return auth.createUserWithEmailAndPassword(email, password);
-        }
+    function signUp(email, password) {
+        return auth.createUserWithEmailAndPassword(email, password);
+    }
 
-        function login(email, password) {
-            return auth.signInWithEmailAndPassword(email, password);
-        }
+    function login(email, password) {
+        return auth.signInWithEmailAndPassword(email, password);
+    }
 
-        function logout() {
-            return auth.signOut();
-        }
+    function logout() {
+        return auth.signOut();
+    }
 
+    function signUpWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        return firebase.auth().signInWithPopup(provider);
+
+    }
 
     //---------------------------------------------------------------------
 
@@ -49,6 +56,7 @@ export default function AuthenticationProvider({children}) {
         signUp,
         login,
         logout,
+        signUpWithGoogle
         // resetPassword,
         // updateEmail,
         // updatePassword

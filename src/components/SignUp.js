@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +14,7 @@ import { AuthenticationContext } from '../context/AuthenticationContext';
 const useStyles = makeStyles((theme) => ({
   //wrapper (main container)
   container: {
-    marginTop: theme.spacing(20),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -22,7 +24,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 1),
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
@@ -38,20 +44,20 @@ export default function SignUp() {
   const [error, setError] = useState({ didError: false, message: '' });
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { signUp } = useContext(AuthenticationContext);
+  const { signUp, signUpWithGoogle } = useContext(AuthenticationContext);
 
   function handleChange(event) {
     //Set the state
     setTextFieldState({ ...textFieldState, [event.target.name]: event.target.value });
   }
 
+  function handleSignUpWithGoogle() {
+    signUpWithGoogle();
+  }
 
-
-
+  //Sign up with Email and password
   async function handleSubmit(event) {
     event.preventDefault();
-
-
 
     //Check if the passwords match
     if (textFieldState.password !== textFieldState.confirmPassword) {
@@ -83,11 +89,14 @@ export default function SignUp() {
     setLoading(false);
   }
 
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.container}>
+
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
 
         <Typography component="h1" variant="h5">
           Sign up
@@ -139,18 +148,30 @@ export default function SignUp() {
                 helperText={error.message}
               />
             </Grid>
-          </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={loading}
-          >
-            Sign Up
-          </Button>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={loading}
+              >
+                Sign Up
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                color="secondary"
+                className={classes.submit}
+                onClick={handleSignUpWithGoogle}
+              >
+                Sign Up with Google
+              </Button>
+            </Grid>
+
+          </Grid>
 
           <Grid container justify="center">
             <Grid item>
