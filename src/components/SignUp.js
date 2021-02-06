@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(2, 0, 1),
+    margin: theme.spacing(1, 0, 0),
   },
   avatar: {
     margin: theme.spacing(1),
