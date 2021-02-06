@@ -61,6 +61,7 @@ export default function SignUp() {
 
   function handleSignUpWithGoogle() {
     signUpWithGoogle();
+    history.push('/');
   }
 
   //Sign up with Email and password
