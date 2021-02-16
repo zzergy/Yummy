@@ -3,14 +3,14 @@
     grid-template-columns: 40px 50px auto 50px 40px;
     grid-template-rows: 70px auto 80px;
     grid-template-areas: 
-    'nav'
+    'navigation'
     '. . main . .'
     'footer footer footer footer footer';
     height: 100vh;
 }
 
-.nav {
-    grid-area: 'nav';
+.navigation {
+    grid-area: 'navigation';
     grid-column-start: 1;
     grid-column-end: 6;
     /* background-color: aquamarine; */
