@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { NavigationBar } from './NavigationBar/NavigationBar';
 import './Home.css';
+import Footer from './Footer'
 
 export default function Home() {
 
@@ -16,22 +17,8 @@ export default function Home() {
             </div>
 
             <div className='footer'>
-                footer
-                </div>
-
-            {/* <div style={{ width: '50vw' }}>
-                {error.length !== 0 && <span>{error}</span>}
-
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={handleLogout}
-                >
-                    Log out
-                </Button>
-            </div> */}
+                <Footer />
+            </div>
         </div>
     );
 }
