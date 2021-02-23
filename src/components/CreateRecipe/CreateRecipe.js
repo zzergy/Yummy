@@ -66,7 +66,7 @@ export default function CreateRecipe() {
                 <CssBaseline />
                 <Grid container spacing={2}>
                     {/* Title */}
-                    <Grid item xs={12} style={{ marginBottom: 15 }}>
+                    <Grid item xs={12} style={{ margin: 15 }}>
                         <Typography component='h1' variant='h5'>
                             Create a new Recipe
                         </Typography>
