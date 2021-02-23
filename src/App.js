@@ -8,6 +8,7 @@ import './App.css';
 import 'fontsource-roboto';
 import AuthenticationProvider from './context/AuthenticationContext';
 import { SnackbarProvider } from 'notistack';
+import CreateRecipe from './components/CreateRecipe/CreateRecipe';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path='/login' component={Login} />
               <Route path='/profile' component={Profile} />
               <Route path='/view-recipe' component={ViewRecipe} />
+              <Route path='/new-recipe' component={CreateRecipe} />
             </Switch>
           </AuthenticationProvider>
         </SnackbarProvider>
