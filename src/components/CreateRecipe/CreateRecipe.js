@@ -8,6 +8,7 @@ import "firebase/database";
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom'
+import NavigationBar from '../NavigationBar/NavigationBar';
 
 export default function CreateRecipe() {
     const { currentUser } = useContext(AuthenticationContext);
@@ -59,75 +60,96 @@ export default function CreateRecipe() {
     }
 
     return (
-        <Container component="form" onSubmit={handleSubmit}>
-            <CssBaseline />
-            <Grid container spacing={2}>
-                {/* Title */}
-                <Grid item xs={12} style={{ margin: 15 }}>
-                    <Typography component='h1' variant='h5'>
-                        Create a new Recipe
+        <>
+            <NavigationBar />
+            <Container component="form" onSubmit={handleSubmit}>
+                <CssBaseline />
+                <Grid container spacing={2}>
+                    {/* Title */}
+                    <Grid item xs={12} style={{ marginBottom: 15 }}>
+                        <Typography component='h1' variant='h5'>
+                            Create a new Recipe
                         </Typography>
-                </Grid>
-                {/* Dish info */}
-                <Grid item xs={6}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="title"
-                                name="title"
-                                label="Title"
-                                onChange={handleChange}
-                                value={formData.title}
-                            />
-                        </Grid>
+                    </Grid>
+                    {/* Dish info */}
+                    <Grid item xs={6}>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="title"
+                                    name="title"
+                                    label="Title"
+                                    onChange={handleChange}
+                                    value={formData.title}
+                                />
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="description"
-                                name="description"
-                                label="Dish Description"
-                                multiline
-                                rowsMax={15}
-                                rows={10}
-                                onChange={handleChange}
-                                value={formData.description}
-                            />
-                        </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="description"
+                                    name="description"
+                                    label="Dish Description"
+                                    multiline
+                                    rowsMax={15}
+                                    rows={10}
+                                    onChange={handleChange}
+                                    value={formData.description}
+                                />
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="time"
-                                name="time"
-                                label="Time needed"
-                                onChange={handleChange}
-                                value={formData.time}
-                            />
-                        </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="time"
+                                    name="time"
+                                    label="Time needed"
+                                    onChange={handleChange}
+                                    value={formData.time}
+                                />
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                fullWidth
-                                id="ingreedientsList"
-                                name="ingreedientsList"
-                                label="Ingreedients List"
-                                multiline
-                                rowsMax={10}
-                                rows={10}
-                                onChange={handleChange}
-                                value={formData.ingreedientsList}
-                            />
-                        </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    fullWidth
+                                    id="ingreedientsList"
+                                    name="ingreedientsList"
+                                    label="Ingreedients List"
+                                    multiline
+                                    rowsMax={10}
+                                    rows={10}
+                                    onChange={handleChange}
+                                    value={formData.ingreedientsList}
+                                />
+                            </Grid>
 
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    fullWidth
+                                    id="cookingInstructions"
+                                    name="cookingInstructions"
+                                    label="Cooking instructions"
+                                    multiline
+                                    rowsMax={10}
+                                    rows={10}
+                                    onChange={handleChange}
+                                    value={formData.cookingInstructions}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    {/* Upload img and video */}
+                    <Grid item container xs={6}>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -138,72 +160,54 @@ export default function CreateRecipe() {
                                 multiline
                                 rowsMax={10}
                                 rows={10}
-                                onChange={handleChange}
-                                value={formData.cookingInstructions}
+
+                            // onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="cookingInstructions"
+                                name="cookingInstructions"
+                                label="Cooking instructions"
+                                multiline
+                                rowsMax={10}
+                                rows={10}
+
+                            // onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                id="cookingInstructions"
+                                name="cookingInstructions"
+                                label="Cooking instructions"
+                                multiline
+                                rowsMax={10}
+                                rows={10}
+
+                            // onChange={handleChange}
                             />
                         </Grid>
                     </Grid>
-                </Grid>
 
-                {/* Upload img and video */}
-                <Grid item container xs={6}>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
+                    {/* Submit Button  */}
+                    <Grid item container xs={12}>
+                        <Button
+                            style={{ marginBottom: 5 }}
+                            type="submit"
                             fullWidth
-                            id="cookingInstructions"
-                            name="cookingInstructions"
-                            label="Cooking instructions"
-                            multiline
-                            rowsMax={10}
-                            rows={10}
-
-                        // onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
                             variant="outlined"
-                            fullWidth
-                            id="cookingInstructions"
-                            name="cookingInstructions"
-                            label="Cooking instructions"
-                            multiline
-                            rowsMax={10}
-                            rows={10}
-
-                        // onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            id="cookingInstructions"
-                            name="cookingInstructions"
-                            label="Cooking instructions"
-                            multiline
-                            rowsMax={10}
-                            rows={10}
-
-                        // onChange={handleChange}
-                        />
-                    </Grid>
-                </Grid>
-
-                {/* Submit Button  */}
-                <Grid item container xs={12}>
-                    <Button
-                        style={{ marginBottom: 5 }}
-                        type="submit"
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                    >
-                        Publish Recipe
+                            color="primary"
+                        >
+                            Publish Recipe
                         </Button>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </Container>
+        </>
     )
 }
