@@ -1,12 +1,17 @@
 import { Button, Container, Grid } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase/app';
 import "firebase/database";
+import { AuthenticationContext } from '../../context/AuthenticationContext';
+import { useSnackbar } from 'notistack';
+import { useHistory } from 'react-router-dom'
 
 export default function CreateRecipe() {
+    const { currentUser } = useContext(AuthenticationContext);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -14,6 +19,7 @@ export default function CreateRecipe() {
         ingreedientsList: '',
         cookingInstructions: ''
     });
+    const history = useHistory();
 
     function handleChange(event) {
         const name = event.target.name;
@@ -23,16 +29,33 @@ export default function CreateRecipe() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        const db = firebase.database().ref("recipes");
-        db.push({ ...formData });
-        setFormData({
-            ...formData,
-            title: '',
-            description: '',
-            time: '',
-            ingreedientsList: '',
-            cookingInstructions: ''
-        });
+
+        // Check if the user is registered
+        if (currentUser) {
+            const db = firebase.database().ref("recipes");
+            db.push({ ...formData, userId: currentUser.uid });
+
+            setFormData({
+                ...formData,
+                title: '',
+                description: '',
+                time: '',
+                ingreedientsList: '',
+                cookingInstructions: ''
+            });
+            history.push('/profile');
+            enqueueSnackbar(
+                "Publish successful!", {
+                preventDuplicate: true,
+                variant: "success"
+            });
+        } else {
+            enqueueSnackbar(
+                "Please login to your account", {
+                preventDuplicate: true,
+                variant: "info"
+            });
+        }
     }
 
     return (
