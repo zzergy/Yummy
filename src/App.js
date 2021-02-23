@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
-import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 import ViewRecipe from './components/ViewRecipe';
 import './App.css';
 import 'fontsource-roboto';
