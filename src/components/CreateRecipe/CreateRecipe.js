@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import "firebase/database";
 
 export default function CreateRecipe() {
     const [formData, setFormData] = useState({
@@ -22,8 +23,16 @@ export default function CreateRecipe() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        const db = firebase.database().ref("recipe");
-        db.set({ ...formData });
+        const db = firebase.database().ref("recipes");
+        db.push({ ...formData });
+        setFormData({
+            ...formData,
+            title: '',
+            description: '',
+            time: '',
+            ingreedientsList: '',
+            cookingInstructions: ''
+        });
     }
 
     return (
