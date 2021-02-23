@@ -22,7 +22,6 @@ export function NavigationBar() {
 
     function checkForCurrentUser() {
         if (currentUser) {
-            console.log(currentUser);
             return (
                 <button onClick={handleClick} className='logout-button'>Log Out</button>
             );
