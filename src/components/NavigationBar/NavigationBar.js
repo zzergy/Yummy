@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import './NavigationBar.css'
 import logo from '../logo.png'
 
-export function NavigationBar() {
+export default function NavigationBar() {
 
     const { currentUser } = useContext(AuthenticationContext);
     const { logout } = useContext(AuthenticationContext);
@@ -31,7 +31,6 @@ export function NavigationBar() {
             );
         }
     }
-
 
     return (
         <div className='nav'>
