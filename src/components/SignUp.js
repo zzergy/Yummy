@@ -130,6 +130,7 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
+                value={textFieldState.email}
               />
             </Grid>
 
@@ -145,6 +146,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 error={error.didError}
                 helperText={error.message}
+                value={textFieldState.password}
               />
             </Grid>
 
@@ -160,6 +162,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 error={error.didError}
                 helperText={error.message}
+                value={textFieldState.confirmPassword}
               />
             </Grid>
 

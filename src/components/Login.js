@@ -88,6 +88,7 @@ export default function Login() {
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
+                value={textFieldState.email}
               />
             </Grid>
 
@@ -103,6 +104,7 @@ export default function Login() {
                 onChange={handleChange}
                 error={error.didError}
                 helperText={error.message}
+                value={textFieldState.password}
               />
             </Grid>
           </Grid>
