@@ -72,8 +72,8 @@ export default function CreateRecipe() {
                         </Typography>
                     </Grid>
                     {/* Dish info */}
-                    <Grid item xs={6}>
-                        <Grid container spacing={1}>
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
@@ -149,7 +149,7 @@ export default function CreateRecipe() {
                     </Grid>
 
                     {/* Upload img and video */}
-                    <Grid item container xs={6}>
+                    <Grid item container xs={12} md={6} spacing={2}>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
