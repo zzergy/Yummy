@@ -88,7 +88,7 @@ export default function SignUp() {
       setLoading(true);
 
       //This will wait for the result and if it fails it goes to the catch
-      await signUp(textFieldState.email, textFieldState.password);
+      await signUp(textFieldState.email, textFieldState.password, textFieldState.username);
 
       //Redirect to login upon sucsessfull registration
       history.push('/login');
@@ -119,6 +119,19 @@ export default function SignUp() {
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             {error.message.length !== 0 && <span>{error.message}</span>}
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                name="username"
+                label="Username"
+                onChange={handleChange}
+                value={textFieldState.username}
+              />
+            </Grid>
+            
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
