@@ -3,6 +3,15 @@ import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link, useHistory } from 'react-router-dom';
 import './NavigationBar.css'
 import logo from '../logo.png'
+import { Avatar, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+    avatar: {
+        height: theme.spacing(6),
+        width: theme.spacing(6),
+        backgroundColor: "#ff5722",
+    }
+}))
 
 export default function NavigationBar() {
 
@@ -10,6 +19,7 @@ export default function NavigationBar() {
     const { logout } = useContext(AuthenticationContext);
     const [error, setError] = useState('');
     const history = useHistory();
+    const classes = useStyles();
 
     async function handleClick() {
         try {
@@ -22,8 +32,14 @@ export default function NavigationBar() {
 
     function checkForCurrentUser() {
         if (currentUser) {
+            const firstLetter = currentUser.displayName?.charAt(0);
             return (
-                <button onClick={handleClick} className='logout-button'>Log Out</button>
+                <>
+                    <button onClick={handleClick} className='logout-button'>Log Out</button>
+                    <Link to="/profile">
+                        <Avatar className={classes.avatar} src={currentUser.photoURL}>{currentUser.displayName && firstLetter}</Avatar>
+                    </Link>
+                </>
             );
         } else {
             return (
@@ -36,7 +52,7 @@ export default function NavigationBar() {
         <div className='nav'>
             <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
             <input type='text' placeholder='Search..' className='search-bar' />
-            <div className='button-wrapper'>{checkForCurrentUser()}</div>
+            <div className="user-info-wrapper">{checkForCurrentUser()}</div>
         </div>
     );
 
