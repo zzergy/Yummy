@@ -1,8 +1,9 @@
 import React from 'react';
-import  NavigationBar  from './NavigationBar/NavigationBar';
+import NavigationBar from './NavigationBar/NavigationBar';
 import './Home.css';
 import Footer from './Footer'
-import { Link } from 'react-router-dom';
+import RecipeItem from './RecipeItem/RecipeItem'
+import { Container, Grid } from '@material-ui/core';
 
 export default function Home() {
 
@@ -12,10 +13,40 @@ export default function Home() {
                 <NavigationBar />
             </div>
 
-            <div className='main'>
-                <Link to='/new-recipe'>Create a recipe</Link><br/>
-                <Link to='/profile'>Profile</Link>
-            </div>
+            <Container className="main">
+                <Grid container spacing={4}>
+                    <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item>
+                            <RecipeItem />
+                        </Grid>
+                    </Grid>
+                    <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item>
+                            <RecipeItem />
+                        </Grid>
+                    </Grid>
+                    <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item>
+                            <RecipeItem />
+                        </Grid>
+                    </Grid>
+                    <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item>
+                            <RecipeItem />
+                        </Grid>
+                    </Grid>
+                    <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item>
+                            <RecipeItem />
+                        </Grid>
+                    </Grid>
+                    <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item>
+                            <RecipeItem />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Container>
 
             <div className='footer'>
                 <Footer />
