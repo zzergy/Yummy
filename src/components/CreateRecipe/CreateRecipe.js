@@ -22,6 +22,27 @@ export default function CreateRecipe() {
     });
     const history = useHistory();
 
+    function currentDate() {
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+        const newDate = new Date();
+        let date = newDate.getDate();
+        let year = newDate.getFullYear();
+        return `${months[newDate.getMonth()]} ${date}, ${year}`
+    }
+
     function handleChange(event) {
         const name = event.target.name;
         const value = event.target.value
@@ -31,10 +52,9 @@ export default function CreateRecipe() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        // Check if the user is registered
         if (currentUser) {
             const db = firebase.database().ref("recipes");
-            db.push({ ...formData, userId: currentUser.uid });
+            db.push({ userId: currentUser.uid, date: currentDate(), ...formData });
 
             setFormData({
                 ...formData,
