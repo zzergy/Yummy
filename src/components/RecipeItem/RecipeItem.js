@@ -12,25 +12,27 @@ import {
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import React from 'react';
 import asd from '../test-thumbnail.jpg'
+import Clamp from "react-multiline-clamp";
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
-        maxWidth: 345
+        maxWidth: 345,
+        minWidth: 345
     },
     media: {
         height: 0,
         paddingTop: 220,
     },
     header: {
-        textAlign: "start"
+        textAlign: "start",
     },
     avatar: {
         backgroundColor: "#ff5722"
-    }
+    },
 }))
 
 
-export default function RecipeItem() {
+export default function RecipeItem({ recipe }) {
     const classes = useStyles();
 
     return (
@@ -38,24 +40,38 @@ export default function RecipeItem() {
             <CardHeader
                 className={classes.header}
                 avatar={<Avatar aria-label="recipe" className={classes.avatar}>B</Avatar>}
-                title="This is a test title"
-                subheader="September 14, 2016"
+                title={recipe.title}
+                subheader={recipe.date}
+                titleTypographyProps={
+                    {
+                        noWrap: true,
+                        style: {
+                            width: '245px'
+                        }
+                    }
+                }
             />
             <CardMedia
                 className={classes.media}
                 image={asd}
                 title="dish"
             />
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
-                </Typography>
+            <CardContent style={{ height: '45px' }}>
+                <Clamp lines={3}>
+                    <Typography style={{
+                        overflowWrap: 'break-word',
+                    }} variant="body2" color="textSecondary" component="p">
+                        {recipe?.description}
+                    </Typography>
+                </Clamp>
             </CardContent>
-            <CardActions disableSpacing>
+            <CardActions >
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    Cooking time: {recipe.time}
+                </Typography>
             </CardActions>
         </Card>
     );
