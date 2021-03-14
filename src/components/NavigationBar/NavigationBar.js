@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavigationBar() {
 
-    const { currentUser } = useContext(AuthenticationContext);
+    const { currentUser, loadedUserFromStorage } = useContext(AuthenticationContext);
     const { logout } = useContext(AuthenticationContext);
     const [error, setError] = useState('');
     const history = useHistory();
@@ -30,14 +30,18 @@ export default function NavigationBar() {
         }
     }
 
-    function checkForCurrentUser() {
+    function userNavigationButton() {
+        if (!loadedUserFromStorage) {
+            return <div style={{ width: '130px' }}></div>;
+        }
+        
         if (currentUser) {
-            const firstLetter = currentUser.displayName?.charAt(0);
+            const firstLetter = currentUser?.displayName?.charAt(0);
             return (
                 <>
                     <button onClick={handleClick} className='logout-button'>Log Out</button>
                     <Link to="/profile" style={{textDecoration: 'none'}}>
-                        <Avatar className={classes.avatar} src={currentUser.photoURL}>{currentUser.displayName && firstLetter}</Avatar>
+                        <Avatar className={classes.avatar} src={currentUser?.photoURL}>{currentUser?.displayName && firstLetter}</Avatar>
                     </Link>
                 </>
             );
@@ -52,7 +56,7 @@ export default function NavigationBar() {
         <div className='nav'>
             <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
             <input type='text' placeholder='Search..' className='search-bar' />
-            <div className="user-info-wrapper">{checkForCurrentUser()}</div>
+            <div className="user-info-wrapper">{userNavigationButton()}</div>
         </div>
     );
 

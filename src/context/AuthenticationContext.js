@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { auth } from '../firebase';
 import firebase from "firebase/app";
 
@@ -16,13 +16,15 @@ export const AuthenticationContext = React.createContext({
 export default function AuthenticationProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
-
+    
+    const loadedUserFromStorage = useRef(false);
 
     // Executes only once (when the component loads for the first time)
     useEffect(() => {
         // This returns a promise that when it's called it unsubscribeswhen the component UNMOUNTS.
 
         const unsubscribe = auth.onAuthStateChanged(user => {
+            loadedUserFromStorage.current = true;
             setCurrentUser(user);
             setLoading(false);
         })
@@ -62,7 +64,8 @@ export default function AuthenticationProvider({ children }) {
         signUp,
         login,
         logout,
-        signUpWithGoogle
+        signUpWithGoogle,
+        loadedUserFromStorage: loadedUserFromStorage.current
         // resetPassword,
         // updateEmail,
         // updatePassword
