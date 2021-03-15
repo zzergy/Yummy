@@ -15,7 +15,8 @@ import asd from '../test-thumbnail.jpg'
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
-        maxWidth: 345
+        maxWidth: 345,
+        minWidth: 345,
     },
     media: {
         height: 0,
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export default function RecipeItem() {
+export default function RecipeItem({ recipe }) {
     const classes = useStyles();
 
     return (
@@ -38,8 +39,16 @@ export default function RecipeItem() {
             <CardHeader
                 className={classes.header}
                 avatar={<Avatar aria-label="recipe" className={classes.avatar}>B</Avatar>}
-                title="This is a test title"
-                subheader="September 14, 2016"
+                title={recipe.title}
+                subheader={recipe.date}
+                titleTypographyProps={
+                    {
+                        noWrap: true,
+                        style: {
+                            width: '245px'
+                        }
+                    }
+                }
             />
             <CardMedia
                 className={classes.media}
@@ -48,14 +57,16 @@ export default function RecipeItem() {
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    This impressive paella is a perfect party dish and a fun meal to cook together with your
-                    guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                   {recipe.description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    Cooking time: {recipe.time}
+                </Typography>
             </CardActions>
         </Card>
     );
