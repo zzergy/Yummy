@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 0),
   },
+  signupLink: {
+    margin: theme.spacing(3, 0, 0)
+  }
 }));
 
 export default function Login() {
@@ -38,11 +41,16 @@ export default function Login() {
   const [error, setError] = useState({ didError: false, message: '' });
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { login } = useContext(AuthenticationContext);
+  const { login, signUpWithGoogle } = useContext(AuthenticationContext);
 
   function handleChange(event) {
     //Set the state
     setTextFieldState({ ...textFieldState, [event.target.name]: event.target.value });
+  }
+
+  function handleSignUpWithGoogle() {
+    signUpWithGoogle();
+    history.push('/');
   }
 
   async function handleSubmit(event) {
@@ -107,22 +115,36 @@ export default function Login() {
                 value={textFieldState.password}
               />
             </Grid>
+            <Grid item xs={12}>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={loading}
+              >
+                Login
+            </Button>
+
+              <Button
+                fullWidth
+                variant="outlined"
+                color="secondary"
+                className={classes.submit}
+                onClick={handleSignUpWithGoogle}
+              >
+                Sign In with Google
+            </Button>
+            </Grid>
           </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            disabled={loading}
-          >
-            Login
-          </Button>
-
-          <Grid container justify="center">
+          <Grid container item justify="center">
             <Grid item>
-              Don't have an account?<Link to='/signup'> Sign up</Link>
+              <Typography className={classes.signupLink}>
+                Don't have an account?<Link to='/signup'> Sign up</Link>
+              </Typography>
             </Grid>
           </Grid>
         </form>

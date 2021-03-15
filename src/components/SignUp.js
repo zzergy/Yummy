@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  signupLink: {
+    margin: theme.spacing(3, 0, 0)
+  }
 }));
 
 
@@ -81,7 +84,7 @@ export default function SignUp() {
     } else {
       setError({ ...error, didError: false, message: '' })
     }
-  
+
     //SignUp
     try {
       setError({ ...error, message: '' });
@@ -131,7 +134,7 @@ export default function SignUp() {
                 value={textFieldState.username}
               />
             </Grid>
-            
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -205,7 +208,9 @@ export default function SignUp() {
 
           <Grid container justify="center">
             <Grid item>
-              Already have an account?<Link to='/login'> Login</Link>
+              <Typography className={classes.signupLink}>
+                Already have an account?<Link to='/login'> Login</Link>
+              </Typography>
             </Grid>
           </Grid>
         </form>
