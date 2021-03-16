@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthenticationContext } from '../context/AuthenticationContext';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   //wrapper (main container)
@@ -37,8 +38,8 @@ export default function Login() {
     password: '',
     confirmPassword: '',
   });
+  const { enqueueSnackbar } = useSnackbar();
 
-  const [error, setError] = useState({ didError: false, message: '' });
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { login, signUpWithGoogle } = useContext(AuthenticationContext);
@@ -52,13 +53,10 @@ export default function Login() {
     signUpWithGoogle();
     history.push('/');
   }
-
-  async function handleSubmit(event) {
+  async function handleLogin(event) {
     event.preventDefault();
 
-    //SignUp
     try {
-      setError({ ...error, message: '' });
       setLoading(true);
 
       //This will wait for the result and if it fails it goes to the catch
@@ -66,8 +64,11 @@ export default function Login() {
 
       //Redirect to home upon sucsessfull login
       history.push('/');
-    } catch {
-      setError({ ...error, didError: true, message: 'Failed to Login' });
+    } catch (loginError) {
+      enqueueSnackbar(
+        loginError.message, {
+        preventDuplicate: true,
+      });
     }
     setLoading(false);
   }
@@ -82,9 +83,8 @@ export default function Login() {
           Login
         </Typography>
 
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate onSubmit={handleLogin}>
           <Grid container spacing={2}>
-            {error.message.length !== 0 && <span>{error.message}</span>}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -110,8 +110,6 @@ export default function Login() {
                 type="password"
                 id="password"
                 onChange={handleChange}
-                error={error.didError}
-                helperText={error.message}
                 value={textFieldState.password}
               />
             </Grid>
