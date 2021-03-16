@@ -36,7 +36,7 @@ export default function AuthenticationProvider({ children }) {
     function signUp(email, password, username) {
 
         return auth.createUserWithEmailAndPassword(email, password).then(response => {
-            const user = firebase.auth().currentUser;
+            const user = response.user;
             user.updateProfile({
                 displayName: username
             })
