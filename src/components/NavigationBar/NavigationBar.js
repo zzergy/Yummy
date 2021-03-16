@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link, useHistory } from 'react-router-dom';
 import './NavigationBar.css'
 import logo from '../logo.png'
 import { Avatar, makeStyles } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -17,7 +18,7 @@ export default function NavigationBar() {
 
     const { currentUser, loadedUserFromStorage } = useContext(AuthenticationContext);
     const { logout } = useContext(AuthenticationContext);
-    const [error, setError] = useState('');
+    const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const classes = useStyles();
 
@@ -25,8 +26,11 @@ export default function NavigationBar() {
         try {
             await logout();
             history.push('/');
-        } catch {
-            setError('Failed to log out');
+        } catch (logoutError) {
+            enqueueSnackbar(
+                logoutError.message, {
+                preventDuplicate: true,
+            });
         }
     }
 
@@ -34,13 +38,13 @@ export default function NavigationBar() {
         if (!loadedUserFromStorage) {
             return <div style={{ width: '130px' }}></div>;
         }
-        
+
         if (currentUser) {
             const firstLetter = currentUser?.displayName?.charAt(0);
             return (
                 <>
                     <button onClick={handleClick} className='logout-button'>Log Out</button>
-                    <Link to="/profile" style={{textDecoration: 'none'}}>
+                    <Link to="/profile" style={{ textDecoration: 'none' }}>
                         <Avatar className={classes.avatar} src={currentUser?.photoURL}>{firstLetter}</Avatar>
                     </Link>
                 </>
