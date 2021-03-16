@@ -12,11 +12,10 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 
 export default function CreateRecipe() {
     const { currentUser } = useContext(AuthenticationContext);
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        time: '',
         ingreedientsList: '',
         cookingInstructions: ''
     });
@@ -54,17 +53,23 @@ export default function CreateRecipe() {
 
         if (currentUser) {
             const db = firebase.database().ref("recipes");
-            db.push({ userId: currentUser.uid, date: currentDate(), ...formData });
+            db.push({
+                 ...formData,
+                 date: currentDate(),
+                 authorPhotoURL: currentUser.photoURL,
+                 authorDisplayName: currentUser.displayName
+                 });
 
             setFormData({
                 ...formData,
                 title: '',
                 description: '',
-                time: '',
                 ingreedientsList: '',
                 cookingInstructions: ''
             });
+
             history.push('/profile');
+            
             enqueueSnackbar(
                 "Publish successful!", {
                 preventDuplicate: true,
@@ -120,19 +125,6 @@ export default function CreateRecipe() {
                                     rows={10}
                                     onChange={handleChange}
                                     value={formData.description}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="time"
-                                    name="time"
-                                    label="Time needed"
-                                    onChange={handleChange}
-                                    value={formData.time}
                                 />
                             </Grid>
 

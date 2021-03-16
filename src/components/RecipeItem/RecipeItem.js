@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
     mainContainer: {
         maxWidth: 345,
         minWidth: 345,
+        // This is temporary
+        // maxHeight: 345
     },
     media: {
         height: 0,
@@ -38,7 +40,7 @@ export default function RecipeItem({ recipe }) {
         <Card className={classes.mainContainer}>
             <CardHeader
                 className={classes.header}
-                avatar={<Avatar aria-label="recipe" className={classes.avatar}>B</Avatar>}
+                avatar={<Avatar aria-label="recipe" className={classes.avatar} src={recipe.authorPhotoUrl}>{recipe.authorDisplayName.charAt(0)}</Avatar>}
                 title={recipe.title}
                 subheader={recipe.date}
                 titleTypographyProps={
