@@ -40,7 +40,7 @@ export default function RecipeItem({ recipe }) {
         <Card className={classes.mainContainer}>
             <CardHeader
                 className={classes.header}
-                avatar={<Avatar aria-label="recipe" className={classes.avatar} src={recipe.authorPhotoUrl}>{recipe.authorDisplayName.charAt(0)}</Avatar>}
+                avatar={<Avatar aria-label="recipe" className={classes.avatar} src={recipe.authorPhotoURL}>{recipe.authorDisplayName.charAt(0)}</Avatar>}
                 title={recipe.title}
                 subheader={recipe.date}
                 titleTypographyProps={
@@ -66,9 +66,6 @@ export default function RecipeItem({ recipe }) {
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Cooking time: {recipe.time}
-                </Typography>
             </CardActions>
         </Card>
     );
