@@ -49,9 +49,16 @@ export default function Login() {
     setTextFieldState({ ...textFieldState, [event.target.name]: event.target.value });
   }
 
-  function handleSignUpWithGoogle() {
-    signUpWithGoogle();
-    history.push('/');
+  async function handleSignUpWithGoogle() {
+    try {
+      await signUpWithGoogle();
+      history.push('/');
+    } catch (loginError) {
+      enqueueSnackbar(
+        loginError.message, {
+        preventDuplicate: true,
+      });
+    }
   }
   async function handleLogin(event) {
     event.preventDefault();
