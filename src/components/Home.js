@@ -31,9 +31,9 @@ export default function Home() {
             <Container className="main">
                 <Grid container spacing={4}>
                     {recipes ? recipes.map((recipe, index) => (
-                        <Grid item container justify="center" xs={12} md={6} lg={4}>
+                        <Grid item container justify="center" xs={12} md={6} lg={4} key={index}>
                             <Grid item>
-                                <RecipeItem recipe={recipe} key={index}/>
+                                <RecipeItem recipe={recipe}/>
                             </Grid>
                         </Grid>
                     )) : ''}
