@@ -41,7 +41,7 @@ export default function NavigationBar() {
                 <>
                     <button onClick={handleClick} className='logout-button'>Log Out</button>
                     <Link to="/profile" style={{textDecoration: 'none'}}>
-                        <Avatar className={classes.avatar} src={currentUser?.photoURL}>{currentUser?.displayName && firstLetter}</Avatar>
+                        <Avatar className={classes.avatar} src={currentUser?.photoURL}>{firstLetter}</Avatar>
                     </Link>
                 </>
             );
