@@ -4,7 +4,6 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Profile from './components/Profile/Profile';
 import ViewRecipe from './components/ViewRecipe';
-import './App.css';
 import 'fontsource-roboto';
 import AuthenticationProvider from './context/AuthenticationContext';
 import { SnackbarProvider } from 'notistack';
