@@ -20,7 +20,7 @@
     grid-area: 'main';
     grid-column-start: 3;
     grid-column-end: auto;
-    padding: 20px;
+    padding: 45px;
 }
 
 .footer {
