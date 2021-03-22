@@ -57,7 +57,8 @@ export default function CreateRecipe() {
                  ...formData,
                  date: currentDate(),
                  authorPhotoURL: currentUser.photoURL,
-                 authorDisplayName: currentUser.displayName
+                 authorDisplayName: currentUser.displayName,
+                 uid: currentUser.uid
                  });
 
             setFormData({
