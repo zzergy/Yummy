@@ -15,10 +15,7 @@ import asd from '../test-thumbnail.jpg'
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
-        maxWidth: 345,
-        minWidth: 345,
-        // This is temporary
-        // maxHeight: 345
+        // width: "100%"
     },
     media: {
         height: 0,
