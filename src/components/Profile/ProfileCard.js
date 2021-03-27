@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
-import { Avatar, Grid, Typography, Card } from '@material-ui/core';
+import { Avatar, Grid, Typography, Card, Button } from '@material-ui/core';
 import { AuthenticationContext } from "../../context/AuthenticationContext";
 import { makeStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     cardRoot: {
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(2),
-        marginBottom: 30,
         backgroundColor: "#f5f5f5"
     },
     avatar: {
@@ -30,6 +30,15 @@ const useStyles = makeStyles(theme => ({
         '& > p:first-child': {
             marginLeft: 0
         }
+    },
+    navigationButtons: {
+        display: "flex",
+        flexDirection: "column"
+    },
+    spacer: {
+        display: "flex",
+        width: "100%",
+        justifyContent: "space-between"
     }
 }));
 
@@ -39,16 +48,17 @@ export default function ProfileCard({ recipesCount }) {
 
     return (
         <Card className={classes.cardRoot}>
-                <div>
-                    <Avatar
-                        className={classes.avatar}
-                        src={currentUser?.photoURL}
-                    >
-                        <Typography variant="h4">
-                            {currentUser?.displayName.charAt(0)}
-                        </Typography>
-                    </Avatar>
-                </div>
+            <div>
+                <Avatar
+                    className={classes.avatar}
+                    src={currentUser?.photoURL}
+                >
+                    <Typography variant="h4">
+                        {currentUser?.displayName.charAt(0)}
+                    </Typography>
+                </Avatar>
+            </div>
+            <div className={classes.spacer}>
                 <div className={classes.userInformation}>
                     <Typography variant="h4">{currentUser?.displayName}</Typography>
                     <div className={classes.userStats}>
@@ -56,8 +66,28 @@ export default function ProfileCard({ recipesCount }) {
                         <Typography color="textSecondary">Likes: 12</Typography>
                         <Typography color="textSecondary">Shares: 4</Typography>
                     </div>
-
                 </div>
+                <div className={classes.navigationButtons}>
+                    <Link to="new-recipe">
+                        <Button
+                            style={{ marginBottom: 10}}
+                            fullWidth
+                            variant="contained"
+                            color="default"
+                        >
+                            Create a Recipe
+                    </Button>
+                    </Link>
+
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="default"
+                    >
+                        Edit your recipes
+                    </Button>
+                </div>
+            </div>
         </Card>
     );
 }
