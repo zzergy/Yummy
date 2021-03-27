@@ -6,8 +6,6 @@
     'navigation'
     '. . main . .'
     'footer footer footer footer footer';
-    width: 100vw;
-    height: 100vh;
 }
 
 .navigation {
