@@ -10,6 +10,7 @@ import {
     IconButton,
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React from 'react';
 import asd from '../test-thumbnail.jpg'
 
@@ -40,6 +41,11 @@ export default function RecipeItem({ recipe }) {
                 avatar={<Avatar aria-label="recipe" className={classes.avatar} src={recipe.authorPhotoURL}>{recipe.authorDisplayName.charAt(0)}</Avatar>}
                 title={recipe.title}
                 subheader={recipe.date}
+                action={
+                    <IconButton>
+                        <MoreVertIcon />
+                    </IconButton>
+                }
                 titleTypographyProps={
                     {
                         noWrap: true,
@@ -56,7 +62,7 @@ export default function RecipeItem({ recipe }) {
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                   {recipe.description}
+                    {recipe.description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
