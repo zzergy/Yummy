@@ -33,13 +33,13 @@ export default function Profile() {
             <Container className={"main"}>
                 <Grid container spacing={3}>
                     {/* Left */}
+                    <Grid item xs={12}>
+                        <ProfileCard recipesCount={recipesCount} />
+                    </Grid>
                     <Grid item xs={6}>
                         <Grid container>
                             <Grid item xs={12}>
-                                <ProfileCard recipesCount={recipesCount} />
                                 <Typography variant="h5" align="center" className={classes.titles}>Your Recipes</Typography>
-                            </Grid>
-                            <Grid item>
                                 <UserRecipes recipes={currentUserRecipes} />
                             </Grid>
                         </Grid>
