@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from '@material-ui/core';
+import { Button, Container, Grid, Input } from '@material-ui/core';
 import React, { useState, useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,7 @@ import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom'
 import NavigationBar from '../NavigationBar/NavigationBar';
+import UploadImage from "../UploadImageComponent";
 
 export default function CreateRecipe() {
     const { currentUser } = useContext(AuthenticationContext);
@@ -158,55 +159,11 @@ export default function CreateRecipe() {
                                     value={formData.cookingInstructions}
                                 />
                             </Grid>
+                            <Grid item>
+                                <UploadImage/>
+                            </Grid>
                         </Grid>
                     </Grid>
-
-                    {/* Upload img and video */}
-                    <Grid item container xs={12} md={6} spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                fullWidth
-                                id="cookingInstructions"
-                                name="cookingInstructions"
-                                label="Cooking instructions"
-                                multiline
-                                rowsMax={10}
-                                rows={10}
-
-                            // onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                fullWidth
-                                id="cookingInstructions"
-                                name="cookingInstructions"
-                                label="Cooking instructions"
-                                multiline
-                                rowsMax={10}
-                                rows={10}
-
-                            // onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                fullWidth
-                                id="cookingInstructions"
-                                name="cookingInstructions"
-                                label="Cooking instructions"
-                                multiline
-                                rowsMax={10}
-                                rows={10}
-
-                            // onChange={handleChange}
-                            />
-                        </Grid>
-                    </Grid>
-
                     {/* Submit Button  */}
                     <Grid item container xs={12}>
                         <Button
