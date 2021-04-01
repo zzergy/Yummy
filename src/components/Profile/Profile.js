@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import '../Home.css';
 import Footer from '../Footer';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography, Card } from '@material-ui/core';
 import { AuthenticationContext } from "../../context/AuthenticationContext";
 import ProfileCard from './ProfileCard';
 import UserRecipes from './UserRecipes';
@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core"
 const useStyles = makeStyles(theme => ({
     titles: {
         marginBottom: theme.spacing(3),
+        marginTop: theme.spacing(3),
     }
 }));
 
@@ -37,19 +38,27 @@ export default function Profile() {
                         <ProfileCard recipesCount={recipesCount} />
                     </Grid>
                     <Grid item xs={6}>
-                        <Grid container>
-                            <Grid item xs={12}>
+                        <Grid container component={Card} style={{ background: "#F5F5F5" }} justify="center">
+                            <Grid item xs={10}>
                                 <Typography variant="h5" align="center" className={classes.titles}>Your Recipes</Typography>
-                                <UserRecipes recipes={currentUserRecipes} />
+                                <div style={{ marginBottom: 35 }}>
+                                    <UserRecipes recipes={currentUserRecipes} />
+                                </div>
                             </Grid>
                         </Grid>
                     </Grid>
 
                     {/* Right */}
                     <Grid item xs={6}>
-                        <Typography variant="h5" align="center" className={classes.titles}>Liked Recipes</Typography>
-                        <UserRecipes recipes={currentUserRecipes} />
-                        {/* If there are no liked recipes display a message */}
+                        <Grid container component={Card} style={{ background: "#F5F5F5" }} justify="center">
+                            <Grid item xs={10}>
+                                <Typography variant="h5" align="center" className={classes.titles}>Liked Recipes</Typography>
+                                <div style={{ marginBottom: 35 }}>
+                                    <UserRecipes recipes={currentUserRecipes} />
+                                    {/* If there are no liked recipes display a message */}
+                                </div>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Container>
