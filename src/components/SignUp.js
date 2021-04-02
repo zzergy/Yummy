@@ -11,19 +11,27 @@ import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
+import background from "../img/1.jpg"
 
-//Material ui theme settings
 const useStyles = makeStyles((theme) => ({
-  //wrapper (main container)
+  backgroundDiv: {
+    backgroundImage: `url(${background})`,
+    height: '100vh',
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover"
+  },
   container: {
-    marginTop: theme.spacing(10),
+    paddingTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3),
+  },
+  textFields: {
+    background: "#faf8fb"
   },
   submit: {
     margin: theme.spacing(1, 0, 0),
@@ -107,114 +115,121 @@ export default function SignUp() {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.container}>
+    <div className={classes.backgroundDiv}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.container}>
 
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
 
-        <Typography component="h1" variant="h5">
-          Sign up
+          <Typography component="h1" variant="h5">
+            Sign up
         </Typography>
 
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            {error.message.length !== 0 && <span>{error.message}</span>}
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                name="username"
-                label="Username"
-                onChange={handleChange}
-                value={textFieldState.username}
-              />
-            </Grid>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              {error.message.length !== 0 && <span>{error.message}</span>}
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.textFields}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="username"
+                  name="username"
+                  label="Username"
+                  onChange={handleChange}
+                  value={textFieldState.username}
+                />
+              </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                type="email"
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                onChange={handleChange}
-                value={textFieldState.email}
-              />
-            </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.textFields}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  type="email"
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
+                  onChange={handleChange}
+                  value={textFieldState.email}
+                />
+              </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                onChange={handleChange}
-                error={error.didError}
-                helperText={error.message}
-                value={textFieldState.password}
-              />
-            </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.textFields}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  onChange={handleChange}
+                  error={error.didError}
+                  helperText={error.message}
+                  value={textFieldState.password}
+                />
+              </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirmPassword"
-                label="Confirm password"
-                type="password"
-                id="confirmPassword"
-                onChange={handleChange}
-                error={error.didError}
-                helperText={error.message}
-                value={textFieldState.confirmPassword}
-              />
-            </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.textFields}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm password"
+                  type="password"
+                  id="confirmPassword"
+                  onChange={handleChange}
+                  error={error.didError}
+                  helperText={error.message}
+                  value={textFieldState.confirmPassword}
+                />
+              </Grid>
 
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={loading}
-              >
-                Sign Up
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  disabled={loading}
+                >
+                  Sign Up
               </Button>
-              <Button
-                fullWidth
-                variant="outlined"
-                color="secondary"
-                className={classes.submit}
-                onClick={handleSignUpWithGoogle}
-              >
-                Sign Up with Google
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.submit}
+                  onClick={handleSignUpWithGoogle}
+                >
+                  Sign Up with Google
               </Button>
+              </Grid>
+
             </Grid>
 
-          </Grid>
-
-          <Grid container justify="center">
-            <Grid item>
-              <Typography className={classes.signupLink}>
-                Already have an account?<Link to='/login'> Login</Link>
-              </Typography>
+            <Grid container justify="center">
+              <Grid item>
+                <Typography className={classes.signupLink}>
+                  Already have an account?<Link to='/login'> Login</Link>
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
+    </div>
+
   );
 }
