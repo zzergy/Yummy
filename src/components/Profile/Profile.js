@@ -25,7 +25,6 @@ export default function Profile() {
 
     const currentUserRecipes = recipes?.filter(recipe => { return (recipe.uid === currentUser?.uid) });
     const recipesCount = currentUserRecipes?.length;
-
     return (
         <div className="wrapper">
             <div className="navigation">
@@ -38,7 +37,7 @@ export default function Profile() {
                         <ProfileCard recipesCount={recipesCount} />
                     </Grid>
                     <Grid item xs={6}>
-                        <Grid container component={Card} style={{ background: "#F5F5F5" }} justify="center">
+                        <Grid container component={Card} style={{ background: "#fefcff" }} justify="center">
                             <Grid item xs={10}>
                                 <Typography variant="h5" align="center" className={classes.titles}>Your Recipes</Typography>
                                 <div style={{ marginBottom: 35 }}>
@@ -50,12 +49,11 @@ export default function Profile() {
 
                     {/* Right */}
                     <Grid item xs={6}>
-                        <Grid container component={Card} style={{ background: "#F5F5F5" }} justify="center">
+                        <Grid container component={Card} style={{ background: "#fefcff" }} justify="center">
                             <Grid item xs={10}>
                                 <Typography variant="h5" align="center" className={classes.titles}>Liked Recipes</Typography>
                                 <div style={{ marginBottom: 35 }}>
                                     <UserRecipes recipes={currentUserRecipes} />
-                                    {/* If there are no liked recipes display a message */}
                                 </div>
                             </Grid>
                         </Grid>
