@@ -1,15 +1,15 @@
-import { Button, Container, Grid, Input } from '@material-ui/core';
-import React, { useState, useContext } from 'react';
+import { Button, Container, Grid } from '@material-ui/core';
+import React, { useState, useContext, useRef } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase/app';
+import "firebase/storage"
 import "firebase/database";
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom'
 import NavigationBar from '../NavigationBar/NavigationBar';
-import UploadImage from "../UploadImageComponent";
 
 export default function CreateRecipe() {
     const { currentUser } = useContext(AuthenticationContext);
@@ -18,8 +18,10 @@ export default function CreateRecipe() {
         title: '',
         description: '',
         ingreedientsList: '',
-        cookingInstructions: ''
+        cookingInstructions: '',
     });
+    const [fileData, setFileData] = useState();
+
     const history = useHistory();
 
     function currentDate() {
@@ -43,6 +45,17 @@ export default function CreateRecipe() {
         return `${months[newDate.getMonth()]} ${date}, ${year}`
     }
 
+    const inputRef = useRef();
+    function triggerFileUpload() {
+        inputRef.current.click();
+    }
+
+    function handleFileUploadData(event) {
+        if (event.target.files[0]) {
+            setFileData(event.target.files[0]);
+        }
+    }
+
     function handleChange(event) {
         const name = event.target.name;
         const value = event.target.value
@@ -53,30 +66,43 @@ export default function CreateRecipe() {
         event.preventDefault();
 
         if (currentUser) {
-            const db = firebase.database().ref("recipes");
-            db.push({
-                 ...formData,
-                 date: currentDate(),
-                 authorPhotoURL: currentUser.photoURL,
-                 authorDisplayName: currentUser.displayName,
-                 uid: currentUser.uid
-                 });
+            if (fileData) {
+                //------------- Upload the files to the storage -------------
+                const storageRef = firebase.storage().ref(`${currentUser.uid}/${formData.title}`);
+                const fileRef = storageRef.child(fileData.name);
+                const fileUploadTask = fileRef.put(fileData);
+                fileUploadTask.then(() => {
+                    return firebase.storage().ref().child(`${currentUser.uid}/${formData.title}/${fileData.name}`).getDownloadURL();
+                }).then((url) => {
+                    //------------- DB -------------
+                    const db = firebase.database().ref("recipes");
 
-            setFormData({
-                ...formData,
-                title: '',
-                description: '',
-                ingreedientsList: '',
-                cookingInstructions: ''
-            });
+                    //Submit the form data to the DB
+                    return db.push({
+                        ...formData,
+                        date: currentDate(),
+                        authorPhotoURL: currentUser.photoURL,
+                        authorDisplayName: currentUser.displayName,
+                        uid: currentUser.uid,
+                        imageUrl: url
+                    })
+                }).then(() => {
+                    history.push('/profile');
 
-            history.push('/profile');
-            
-            enqueueSnackbar(
-                "Publish successful!", {
-                preventDuplicate: true,
-                variant: "success"
-            });
+                    enqueueSnackbar(
+                        "Publish successful!", {
+                        preventDuplicate: true,
+                        variant: "success"
+                    });
+                }).catch((error) => {
+                    enqueueSnackbar(
+                        error.message, {
+                        preventDuplicate: true,
+                        variant: "info"
+                    });
+                });
+            };
+
         } else {
             enqueueSnackbar(
                 "Please login to your account", {
@@ -84,6 +110,9 @@ export default function CreateRecipe() {
                 variant: "info"
             });
         }
+
+
+
     }
 
     return (
@@ -160,7 +189,8 @@ export default function CreateRecipe() {
                                 />
                             </Grid>
                             <Grid item>
-                                <UploadImage/>
+                                <input type="file" ref={inputRef} style={{ display: "none" }} onChange={handleFileUploadData} />
+                                <Button onClick={triggerFileUpload}>Upload Image</Button>
                             </Grid>
                         </Grid>
                     </Grid>
