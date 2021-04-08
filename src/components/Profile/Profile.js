@@ -30,7 +30,7 @@ export default function Profile() {
             <div className="navigation">
                 <NavigationBar />
             </div>
-            <Container className={"main"}>
+            <Container className="main">
                 <Grid container spacing={3}>
                     {/* Left */}
                     <Grid item xs={12}>
