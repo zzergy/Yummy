@@ -1,7 +1,10 @@
 import {useEffect} from 'react'
 import firebase from 'firebase/app';
 import "firebase/database";
-
+/**
+ * Gets the data from the Firebase Realtime Database 
+ * @param {setState k} setRecipes 
+ */
 export default function useAllRecipesFromDB(setRecipes) {
     useEffect(() => {
         const recipeRef = firebase.database().ref("recipes");
