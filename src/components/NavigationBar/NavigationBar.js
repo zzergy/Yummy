@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 export default function NavigationBar() {
 
     const { currentUser, loadedUserFromStorage } = useContext(AuthenticationContext);
-    const { logout, avatarColor } = useContext(AuthenticationContext);
+    const { logout } = useContext(AuthenticationContext);
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const classes = useStyles();
@@ -50,7 +50,7 @@ export default function NavigationBar() {
                         <Avatar 
                         className={classes.avatar} 
                         src={currentUser?.photoURL}
-                        style={{backgroundColor: avatarColor}}
+                        style={{backgroundColor: "orange"}}
                         >
                             {firstLetter}</Avatar>
                     </Link>
