@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Avatar, Grid, Typography, Card, Button } from '@material-ui/core';
+import { Avatar, Typography, Card, Button } from '@material-ui/core';
 import { AuthenticationContext } from "../../context/AuthenticationContext";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -9,12 +9,12 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(2),
-        backgroundColor: "#f5f5f5"
+        backgroundColor: "#fefcff"
     },
     avatar: {
         width: '80px',
         height: '80px',
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(1),
     },
     userInformation: {
         display: 'flex',
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProfileCard({ recipesCount }) {
-    const { currentUser } = useContext(AuthenticationContext);
+    const { currentUser, avatarColor } = useContext(AuthenticationContext);
     const classes = useStyles();
 
     return (
@@ -52,9 +52,10 @@ export default function ProfileCard({ recipesCount }) {
                 <Avatar
                     className={classes.avatar}
                     src={currentUser?.photoURL}
+                    style={{backgroundColor: avatarColor}}
                 >
                     <Typography variant="h4">
-                        {currentUser?.displayName.charAt(0)}
+                        {currentUser?.displayName.charAt(0).toUpperCase()}
                     </Typography>
                 </Avatar>
             </div>
@@ -73,7 +74,7 @@ export default function ProfileCard({ recipesCount }) {
                             style={{ marginBottom: 10}}
                             fullWidth
                             variant="contained"
-                            color="default"
+                            color="primary"
                         >
                             Create a Recipe
                     </Button>
@@ -82,7 +83,7 @@ export default function ProfileCard({ recipesCount }) {
                     <Button
                         fullWidth
                         variant="contained"
-                        color="default"
+                        color="primary"
                     >
                         Edit your recipes
                     </Button>

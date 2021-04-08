@@ -8,19 +8,21 @@ import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
     avatar: {
-        height: theme.spacing(6),
-        width: theme.spacing(6),
-        backgroundColor: "#ff5722",
+        height: theme.spacing(5),
+        width: theme.spacing(5),
+        
     }
 }))
 
 export default function NavigationBar() {
 
     const { currentUser, loadedUserFromStorage } = useContext(AuthenticationContext);
-    const { logout } = useContext(AuthenticationContext);
+    const { logout, avatarColor } = useContext(AuthenticationContext);
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const classes = useStyles();
+
+    
 
     async function handleClick() {
         try {
@@ -40,12 +42,17 @@ export default function NavigationBar() {
         }
 
         if (currentUser) {
-            const firstLetter = currentUser?.displayName?.charAt(0);
+            const firstLetter = currentUser?.displayName?.charAt(0).toUpperCase();
             return (
                 <>
                     <button onClick={handleClick} className='logout-button'>Log Out</button>
                     <Link to="/profile" style={{ textDecoration: 'none' }}>
-                        <Avatar className={classes.avatar} src={currentUser?.photoURL}>{firstLetter}</Avatar>
+                        <Avatar 
+                        className={classes.avatar} 
+                        src={currentUser?.photoURL}
+                        style={{backgroundColor: avatarColor}}
+                        >
+                            {firstLetter}</Avatar>
                     </Link>
                 </>
             );
