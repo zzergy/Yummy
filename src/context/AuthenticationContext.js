@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { auth } from '../firebase';
 import firebase from "firebase/app";
+import generateRandomColor from '../generateRandomColor';
 
 export const AuthenticationContext = React.createContext({
     currentUser: {},
+    avatarColor: "",
     signUp: () => { },
     login: () => { },
     logout: () => { },
@@ -16,12 +18,13 @@ export const AuthenticationContext = React.createContext({
 export default function AuthenticationProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
-    
+    const [avatarColor, setAvatarColor] = useState("");
+
     const loadedUserFromStorage = useRef(false);
 
     // Executes only once (when the component loads for the first time)
     useEffect(() => {
-        // This returns a promise that when it's called it unsubscribeswhen the component UNMOUNTS.
+        // This returns a promise that when it's called it unsubscribes when the component UNMOUNTS.
 
         const unsubscribe = auth.onAuthStateChanged(user => {
             loadedUserFromStorage.current = true;
@@ -34,6 +37,7 @@ export default function AuthenticationProvider({ children }) {
 
     //------------------------------ METHODS ------------------------------
     function signUp(email, password, username) {
+        setAvatarColor(generateRandomColor());
 
         return auth.createUserWithEmailAndPassword(email, password).then(response => {
             const user = response.user;
@@ -52,6 +56,7 @@ export default function AuthenticationProvider({ children }) {
     }
 
     function signUpWithGoogle() {
+        setAvatarColor(generateRandomColor());
         const provider = new firebase.auth.GoogleAuthProvider();
         return firebase.auth().signInWithPopup(provider);
 
@@ -61,6 +66,7 @@ export default function AuthenticationProvider({ children }) {
 
     const values = {
         currentUser,
+        avatarColor, 
         signUp,
         login,
         logout,
