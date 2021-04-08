@@ -70,9 +70,16 @@ export default function SignUp() {
     setTextFieldState({ ...textFieldState, [event.target.name]: event.target.value });
   }
 
-  function handleSignUpWithGoogle() {
-    signUpWithGoogle();
-    history.push('/');
+  async function handleSignUpWithGoogle() {
+    try {
+      await signUpWithGoogle();
+      history.push('/');
+    } catch (loginError) {
+      enqueueSnackbar(
+        loginError.message, {
+        preventDuplicate: true,
+      });
+    }
   }
 
   //Sign up with Email and password
