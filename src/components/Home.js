@@ -15,10 +15,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Home() {
-    const [recipes, setRecipes] = useState();
     const classes = useStyles();
-
-    useAllRecipesFromDB(setRecipes);
+    const recipes = useAllRecipesFromDB();
 
     return (
         <div className='wrapper'>

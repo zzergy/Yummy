@@ -18,10 +18,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Profile() {
     const { currentUser } = useContext(AuthenticationContext);
-    const [recipes, setRecipes] = useState();
     const classes = useStyles();
 
-    useAllRecipesFromDB(setRecipes);
+    const recipes = useAllRecipesFromDB();
 
     const currentUserRecipes = recipes?.filter(recipe => { return (recipe.uid === currentUser?.uid) });
     const recipesCount = currentUserRecipes?.length;
