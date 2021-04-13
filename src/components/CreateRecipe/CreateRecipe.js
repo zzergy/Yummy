@@ -19,6 +19,7 @@ export default function CreateRecipe() {
         description: '',
         ingreedientsList: '',
         cookingInstructions: '',
+        likes: []
     });
     const [fileData, setFileData] = useState();
 
@@ -83,7 +84,7 @@ export default function CreateRecipe() {
                         date: currentDate(),
                         authorPhotoURL: currentUser.photoURL,
                         authorDisplayName: currentUser.displayName,
-                        uid: currentUser.uid,
+                        authorUid: currentUser.uid,
                         imageUrl: url
                     })
                 }).then(() => {
