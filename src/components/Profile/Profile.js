@@ -34,7 +34,7 @@ export default function Profile() {
                 <Grid container spacing={3}>
                     {/* Left */}
                     <Grid item xs={12}>
-                        <ProfileCard recipesCount={recipesCount} />
+                        <ProfileCard recipesCount={recipesCount}/>
                     </Grid>
                     <Grid item xs={6}>
                         <Grid container component={Card} style={{ background: "#fefcff" }} justify="center">
