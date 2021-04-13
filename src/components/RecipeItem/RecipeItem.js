@@ -11,9 +11,11 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import noImageFound from '../../img/no-image-found.png'
+import firebase from 'firebase/app';
+import "firebase/database";
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -34,7 +36,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function RecipeItem({ recipe }) {
     const classes = useStyles();
-    const { avatarColor } = useContext(AuthenticationContext);
+    const { currentUser } = useContext(AuthenticationContext);
+
+    function handleLike() {
+        const recipeLikes = recipe.likes || [];
+        const isLiked = recipeLikes.includes(currentUser.uid);
+        if (!isLiked) {
+            const db = firebase.database().ref(`recipes`).child(recipe.id);
+            const updatedRecipeWithoutId = { ...recipe, likes: [...recipeLikes, currentUser.uid] };
+            delete updatedRecipeWithoutId.id;
+            db.set(updatedRecipeWithoutId);
+        }
+        
+    }
+
+    const likedByCurrentUser = recipe.likes?.includes(currentUser?.uid);
 
     return (
         <Card className={classes.mainContainer}>
@@ -44,7 +60,7 @@ export default function RecipeItem({ recipe }) {
                     aria-label="recipe"
                     className={classes.avatar}
                     src={recipe.authorPhotoURL}
-                    style={{ backgroundColor: avatarColor }}>
+                    style={{ backgroundColor: "orange" }}>
                     {recipe.authorDisplayName.charAt(0).toUpperCase()}
                 </Avatar>}
                 title={recipe.title}
@@ -69,14 +85,15 @@ export default function RecipeItem({ recipe }) {
                 title="dish"
             />
             <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p" style={{marginLeft: 5}}>
+                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 5 }}>
                     {recipe.description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+                <IconButton disabled={likedByCurrentUser} aria-label="add to favorites" onClick={handleLike}>
                     <FavoriteIcon />
                 </IconButton>
+                <Typography>{recipe.likes?.length}</Typography>
             </CardActions>
         </Card>
     );
