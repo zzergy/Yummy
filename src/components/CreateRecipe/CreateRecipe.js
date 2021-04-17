@@ -67,55 +67,54 @@ export default function CreateRecipe() {
         event.preventDefault();
 
         if (currentUser) {
-            if (fileData) {
-                //------------- Upload the files to the storage -------------
-                const storageRef = firebase.storage().ref(`${currentUser.uid}/${formData.title}`);
-                const fileRef = storageRef.child(fileData.name);
-                const fileUploadTask = fileRef.put(fileData);
-                fileUploadTask.then(() => {
-                    return firebase.storage().ref().child(`${currentUser.uid}/${formData.title}/${fileData.name}`).getDownloadURL();
-                }).then((url) => {
-                    //------------- DB -------------
-                    const db = firebase.database().ref("recipes");
+            new Promise((resolve, reject) => {
+                if (fileData) {
+                    //------------- Upload the files to the storage -------------
+                    const storageRef = firebase.storage().ref(`${currentUser.uid}/${formData.title}`);
+                    const fileRef = storageRef.child(fileData.name);
+                    const fileUploadPromise = fileRef.put(fileData);
 
-                    //Submit the form data to the DB
-                    return db.push({
-                        ...formData,
-                        date: currentDate(),
-                        authorPhotoURL: currentUser.photoURL,
-                        authorDisplayName: currentUser.displayName,
-                        authorUid: currentUser.uid,
-                        imageUrl: url
-                    })
-                }).then(() => {
-                    history.push('/profile');
+                    //You handle that promsise here
+                    fileUploadPromise.then(() => {
+                        const fileURLPromise = firebase.storage().ref().child(`${currentUser.uid}/${formData.title}/${fileData.name}`).getDownloadURL();
+                        return fileURLPromise;
+                    }).then((url) => {
+                        resolve(url);
+                    }).catch(reject);
+                } else {
+                    resolve("");
+                }
+            }).then((url) => {
+                //------------- DB -------------
+                const db = firebase.database().ref("recipes");
 
-                    enqueueSnackbar(
-                        "Publish successful!", {
-                        preventDuplicate: true,
-                        variant: "success"
-                    });
-                }).catch((error) => {
-                    enqueueSnackbar(
-                        error.message, {
-                        preventDuplicate: true,
-                        variant: "info"
-                    });
+                //Submit the form data to the DB
+                return db.push({
+                    ...formData,
+                    date: currentDate(),
+                    authorPhotoURL: currentUser.photoURL,
+                    authorDisplayName: currentUser.displayName,
+                    authorUid: currentUser.uid,
+                    imageUrl: url
+                })
+            }).then(() => {
+                history.push('/profile');
+
+                enqueueSnackbar(
+                    "Publish successful!", {
+                    preventDuplicate: true,
+                    variant: "success"
                 });
-            };
-
-        } else {
-            enqueueSnackbar(
-                "Please login to your account", {
-                preventDuplicate: true,
-                variant: "info"
+            }).catch((error) => {
+                enqueueSnackbar(
+                    error.message, {
+                    preventDuplicate: true,
+                    variant: "info"
+                });
             });
         }
-
-
-
     }
-
+    
     return (
         <>
             <NavigationBar />
