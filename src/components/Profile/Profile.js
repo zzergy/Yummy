@@ -22,7 +22,7 @@ export default function Profile() {
 
     const recipes = useAllRecipesFromDB();
 
-    const currentUserRecipes = recipes?.filter(recipe => { return (recipe.uid === currentUser?.uid) });
+    const currentUserRecipes = recipes?.filter(recipe => { return (recipe.authorUid === currentUser?.uid) });
     const recipesCount = currentUserRecipes?.length;
     return (
         <div className="wrapper">
