@@ -19,27 +19,27 @@ export default function Home() {
     const recipes = useAllRecipesFromDB();
 
     return (
-        <div className='wrapper'>
-            <div className="navigation">
-                <NavigationBar />
-            </div>
+        <>
+            <NavigationBar />
+            <div className='wrapper'>
 
-            <Container className="main">
-                <Grid container spacing={6}>
-                    {recipes ? recipes.map((recipe, index) => (
-                        <Grid item container justify="center" xs={12} md={6} lg={4} key={index}>
-                            <Grid item >
-                                <div className={classes.recipeCard}>
-                                    <RecipeItem recipe={recipe}/>
-                                </div>
+                <Container className="main">
+                    <Grid container spacing={6}>
+                        {recipes ? recipes.map((recipe, index) => (
+                            <Grid item container justify="center" xs={12} md={6} lg={4} key={index}>
+                                <Grid item >
+                                    <div className={classes.recipeCard}>
+                                        <RecipeItem recipe={recipe} />
+                                    </div>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    )) : ''}
-                </Grid>
-            </Container>
-            <div className='footer'>
-                <Footer />
+                        )) : ''}
+                    </Grid>
+                </Container>
+                <div className='footer'>
+                    <Footer />
+                </div>
             </div>
-        </div>
+        </>
     );
 }

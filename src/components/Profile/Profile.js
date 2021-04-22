@@ -33,10 +33,10 @@ export default function Profile() {
         }
     }, 0 /* The initial value of the previousValue parameter */);
     return (
+        <>
+        <NavigationBar />
+
         <div className="wrapper">
-            <div className="navigation">
-                <NavigationBar />
-            </div>
             <Container className="main">
                 <Grid container spacing={3}>
                     {/* Left */}
@@ -71,5 +71,6 @@ export default function Profile() {
                 <Footer />
             </div>
         </div>
+        </>
     )
 }
