@@ -24,6 +24,14 @@ export default function Profile() {
 
     const currentUserRecipes = recipes?.filter(recipe => { return (recipe.authorUid === currentUser?.uid) });
     const recipesCount = currentUserRecipes?.length;
+
+    const likeCount = currentUserRecipes.reduce((acc, currentValue) => {
+        if (currentValue.likes?.length) {
+            return acc + currentValue.likes?.length;
+        } else {
+            return acc;
+        }
+    }, 0 /* The initial value of the previousValue parameter */);
     return (
         <div className="wrapper">
             <div className="navigation">
@@ -33,7 +41,7 @@ export default function Profile() {
                 <Grid container spacing={3}>
                     {/* Left */}
                     <Grid item xs={12}>
-                        <ProfileCard recipesCount={recipesCount}/>
+                        <ProfileCard likeCount={likeCount} recipesCount={recipesCount} />
                     </Grid>
                     <Grid item xs={6}>
                         <Grid container component={Card} style={{ background: "#fefcff" }} justify="center">

@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function ProfileCard({ recipesCount }) {
+export default function ProfileCard({ recipesCount, likeCount }) {
     const { currentUser, avatarColor } = useContext(AuthenticationContext);
     const classes = useStyles();
 
@@ -64,7 +64,7 @@ export default function ProfileCard({ recipesCount }) {
                     <Typography variant="h4">{currentUser?.displayName}</Typography>
                     <div className={classes.userStats}>
                         <Typography color="textSecondary">Recipes: {recipesCount}</Typography>
-                        <Typography color="textSecondary">Likes: 12</Typography>
+                        <Typography color="textSecondary">Likes: {likeCount}</Typography>
                         <Typography color="textSecondary">Shares: 4</Typography>
                     </div>
                 </div>
