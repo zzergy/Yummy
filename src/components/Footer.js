@@ -3,7 +3,7 @@ import React from 'react';
 export default function Footer() {
     const styles = {
         color: '#757575',
-        marginTop: 9
+        marginBottom: 9
     }
 
     return (

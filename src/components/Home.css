@@ -1,22 +1,20 @@
 .wrapper {
     display: grid;
-    height: 100vh;
-    grid-template-columns: 40px 50px auto 50px 40px;
-    grid-template-rows: 70px auto 40px;
+    height: 100%;
     grid-template-areas: 
     'navigation'
     '. . main . .'
-    'footer footer footer footer footer';
+    'footer';
 }
 
-.navigation {
+/* .navigation {
     grid-area: 'navigation';
     grid-column-start: 1;
     grid-column-end: 6;
-}
+} */
 
 .main {
-    grid-area: 'main';
+    grid-area: main;
     grid-column-start: 3;
     grid-column-end: auto;
     padding: 45px;
@@ -25,7 +23,7 @@
 .footer {
     display: flex;
     justify-content: center;
-    grid-area: 'footer';
+    grid-area: footer;
     grid-column-start: 1;
     grid-column-end: 6;
     grid-row-start: 3;
