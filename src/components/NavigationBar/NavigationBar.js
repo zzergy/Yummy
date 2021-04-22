@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link, useHistory } from 'react-router-dom';
 import './NavigationBar.css'
@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         height: theme.spacing(5),
         width: theme.spacing(5),
-        
     }
 }))
 
@@ -21,8 +20,7 @@ export default function NavigationBar() {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const classes = useStyles();
-
-    
+    const [navigationBarStyles, setNavigationBarStyles] = useState(false);
 
     async function handleClick() {
         try {
@@ -36,6 +34,14 @@ export default function NavigationBar() {
         }
     }
 
+    window.addEventListener('scroll', () => {
+        if (window.scrollY >= 69) {
+            setNavigationBarStyles(true);
+        } else {
+            setNavigationBarStyles(false);
+        }
+    })
+
     function userNavigationButton() {
         if (!loadedUserFromStorage) {
             return <div style={{ width: '130px' }}></div>;
@@ -47,10 +53,10 @@ export default function NavigationBar() {
                 <>
                     <button onClick={handleClick} className='logout-button'>Log Out</button>
                     <Link to="/profile" style={{ textDecoration: 'none' }}>
-                        <Avatar 
-                        className={classes.avatar} 
-                        src={currentUser?.photoURL}
-                        style={{backgroundColor: "orange"}}
+                        <Avatar
+                            className={classes.avatar}
+                            src={currentUser?.photoURL}
+                            style={{ backgroundColor: "orange" }}
                         >
                             {firstLetter}</Avatar>
                     </Link>
@@ -64,7 +70,7 @@ export default function NavigationBar() {
     }
 
     return (
-        <div className='nav'>
+        <div className={navigationBarStyles ? "nav scrolled" : "nav"}>
             <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
             <input type='text' placeholder='Search..' className='search-bar' />
             <div className="user-info-wrapper">{userNavigationButton()}</div>
