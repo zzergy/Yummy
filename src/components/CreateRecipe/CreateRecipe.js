@@ -95,7 +95,8 @@ export default function CreateRecipe() {
                     authorPhotoURL: currentUser.photoURL,
                     authorDisplayName: currentUser.displayName,
                     authorUid: currentUser.uid,
-                    imageUrl: url
+                    imageUrl: url,
+                    likes: []
                 })
             }).then(() => {
                 history.push('/profile');
