@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ProfileCard({ recipesCount, likeCount }) {
-    const { currentUser, avatarColor } = useContext(AuthenticationContext);
+    const { currentUser } = useContext(AuthenticationContext);
     const classes = useStyles();
 
     return (
@@ -52,7 +52,7 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                 <Avatar
                     className={classes.avatar}
                     src={currentUser?.photoURL}
-                    style={{backgroundColor: avatarColor}}
+                    style={{backgroundColor: "#E73645"}}
                 >
                     <Typography variant="h4">
                         {currentUser?.displayName.charAt(0).toUpperCase()}

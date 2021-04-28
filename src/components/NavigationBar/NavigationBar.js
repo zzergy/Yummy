@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         height: theme.spacing(5),
         width: theme.spacing(5),
+        backgroundColor: "#E73645",
     }
 }))
 
@@ -56,7 +57,6 @@ export default function NavigationBar() {
                         <Avatar
                             className={classes.avatar}
                             src={currentUser?.photoURL}
-                            style={{ backgroundColor: "orange" }}
                         >
                             {firstLetter}</Avatar>
                     </Link>

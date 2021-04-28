@@ -60,7 +60,7 @@ export default function RecipeItem({ recipe }) {
                     aria-label="recipe"
                     className={classes.avatar}
                     src={recipe.authorPhotoURL}
-                    style={{ backgroundColor: "orange" }}>
+                    style={{ backgroundColor: "#E73645" }}>
                     {recipe.authorDisplayName.charAt(0).toUpperCase()}
                 </Avatar>}
                 title={recipe.title}
