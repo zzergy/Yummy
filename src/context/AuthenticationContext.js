@@ -8,14 +8,10 @@ export const AuthenticationContext = React.createContext({
     login: () => { },
     logout: () => { },
     signUpWithGoogle: () => { },
-    // resetPassword: () => { },
-    // updateEmail: () => { },
-    // updatePassword: () => { },
 });
 
 export default function AuthenticationProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
-    const [loading, setLoading] = useState(true);
     const loadedUserFromStorage = useRef(false);
 
     // Executes only once (when the component loads for the first time)
@@ -25,7 +21,6 @@ export default function AuthenticationProvider({ children }) {
         const unsubscribe = auth.onAuthStateChanged(user => {
             loadedUserFromStorage.current = true;
             setCurrentUser(user);
-            setLoading(false);
         })
 
         return unsubscribe;
@@ -63,9 +58,6 @@ export default function AuthenticationProvider({ children }) {
         logout,
         signUpWithGoogle,
         loadedUserFromStorage: loadedUserFromStorage.current
-        // resetPassword,
-        // updateEmail,
-        // updatePassword
     }
 
     return (
