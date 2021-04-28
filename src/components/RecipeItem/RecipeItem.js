@@ -7,15 +7,15 @@ import {
     CardContent,
     Typography,
     CardActions,
-    IconButton,
+    IconButton
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import noImageFound from '../../img/no-image-found.png'
 import firebase from 'firebase/app';
 import "firebase/database";
+import SaveRecipeDropdown from '../../SaveRecipeDropdown'
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -29,10 +29,7 @@ const useStyles = makeStyles(theme => ({
     header: {
         textAlign: "start"
     },
-    avatar: {
-    }
 }))
-
 
 export default function RecipeItem({ recipe }) {
     const classes = useStyles();
@@ -47,7 +44,6 @@ export default function RecipeItem({ recipe }) {
             delete updatedRecipeWithoutId.id;
             db.set(updatedRecipeWithoutId);
         }
-        
     }
 
     const likedByCurrentUser = recipe.likes?.includes(currentUser?.uid);
@@ -60,15 +56,14 @@ export default function RecipeItem({ recipe }) {
                     aria-label="recipe"
                     className={classes.avatar}
                     src={recipe.authorPhotoURL}
-                    style={{ backgroundColor: "#E73645" }}>
+                    style={{ backgroundColor: "#E73645" }}
+                    >
                     {recipe.authorDisplayName.charAt(0).toUpperCase()}
                 </Avatar>}
                 title={recipe.title}
                 subheader={recipe.date}
                 action={
-                    <IconButton>
-                        <MoreVertIcon />
-                    </IconButton>
+                    <SaveRecipeDropdown />
                 }
                 titleTypographyProps={
                     {
