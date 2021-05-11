@@ -8,6 +8,7 @@ import ProfileCard from './ProfileCard';
 import UserRecipes from './UserRecipes';
 import useAllRecipesFromDB from '../../useAllRecipesFromDB';
 import { makeStyles } from "@material-ui/core"
+import useAllSavedRecipesFromCurrentUser from '../../useAllSavedRecipesFromCurrentUser';
 
 const useStyles = makeStyles(theme => ({
     titles: {
@@ -21,6 +22,7 @@ export default function Profile() {
     const classes = useStyles();
 
     const recipes = useAllRecipesFromDB();
+    const savedRecipesFromUser = useAllSavedRecipesFromCurrentUser();
 
     const currentUserRecipes = recipes?.filter(recipe => { return (recipe.authorUid === currentUser?.uid) });
     const recipesCount = currentUserRecipes?.length;
@@ -60,7 +62,7 @@ export default function Profile() {
                             <Grid item xs={10}>
                                 <Typography variant="h5" align="center" className={classes.titles}>Liked Recipes</Typography>
                                 <div style={{ marginBottom: 35 }}>
-                                    <UserRecipes recipes={currentUserRecipes} />
+                                    <UserRecipes recipes={savedRecipesFromUser} />
                                 </div>
                             </Grid>
                         </Grid>

@@ -63,7 +63,7 @@ export default function RecipeItem({ recipe }) {
                 title={recipe.title}
                 subheader={recipe.date}
                 action={
-                    <SaveRecipeDropdown />
+                    <SaveRecipeDropdown recipe={recipe}/>
                 }
                 titleTypographyProps={
                     {
