@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import '../Home.css';
 import Footer from '../Footer';
 import { Container, Grid, Typography, Card } from '@material-ui/core';
 import { AuthenticationContext } from "../../context/AuthenticationContext";
 import ProfileCard from './ProfileCard';
-import UserRecipes from './UserRecipes';
+import DisplayRecipesInProfilePage from './DisplayRecipesInProfilePage';
 import useAllRecipesFromDB from '../../useAllRecipesFromDB';
 import { makeStyles } from "@material-ui/core"
 import useAllSavedRecipesFromCurrentUser from '../../useAllSavedRecipesFromCurrentUser';
@@ -50,7 +50,7 @@ export default function Profile() {
                             <Grid item xs={10}>
                                 <Typography variant="h5" align="center" className={classes.titles}>Your Recipes</Typography>
                                 <div style={{ marginBottom: 35 }}>
-                                    <UserRecipes recipes={currentUserRecipes} />
+                                    <DisplayRecipesInProfilePage recipes={currentUserRecipes} />
                                 </div>
                             </Grid>
                         </Grid>
@@ -62,7 +62,7 @@ export default function Profile() {
                             <Grid item xs={10}>
                                 <Typography variant="h5" align="center" className={classes.titles}>Liked Recipes</Typography>
                                 <div style={{ marginBottom: 35 }}>
-                                    <UserRecipes recipes={savedRecipesFromUser} />
+                                    <DisplayRecipesInProfilePage recipes={savedRecipesFromUser} />
                                 </div>
                             </Grid>
                         </Grid>
