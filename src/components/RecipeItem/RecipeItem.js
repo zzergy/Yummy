@@ -29,6 +29,12 @@ const useStyles = makeStyles(theme => ({
     header: {
         textAlign: "start"
     },
+    avatar: {
+        backgroundColor: theme.palette.primary.main
+    },
+    disabledLikeButton: {
+        color: theme.palette.secondary.light
+    },
 }))
 
 export default function RecipeItem({ recipe }) {
@@ -56,14 +62,13 @@ export default function RecipeItem({ recipe }) {
                     aria-label="recipe"
                     className={classes.avatar}
                     src={recipe.authorPhotoURL}
-                    style={{ backgroundColor: "#E73645" }}
-                    >
+                >
                     {recipe.authorDisplayName.charAt(0).toUpperCase()}
                 </Avatar>}
                 title={recipe.title}
                 subheader={recipe.date}
                 action={
-                    <SaveRecipeDropdown recipe={recipe}/>
+                    <SaveRecipeDropdown recipe={recipe} />
                 }
                 titleTypographyProps={
                     {
@@ -86,7 +91,7 @@ export default function RecipeItem({ recipe }) {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton disabled={likedByCurrentUser} aria-label="add to favorites" onClick={handleLike}>
-                    <FavoriteIcon />
+                    <FavoriteIcon className={likedByCurrentUser && classes.disabledLikeButton} />
                 </IconButton>
                 <Typography>{recipe.likes?.length}</Typography>
             </CardActions>

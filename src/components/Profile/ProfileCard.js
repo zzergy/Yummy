@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
         width: '80px',
         height: '80px',
         marginLeft: theme.spacing(1),
+        backgroundColor: theme.palette.primary.main
     },
     userInformation: {
         display: 'flex',
@@ -31,9 +32,9 @@ const useStyles = makeStyles(theme => ({
             marginLeft: 0
         }
     },
-    navigationButtons: {
+    navigationButtonsContainer: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
     },
     spacer: {
         display: "flex",
@@ -52,7 +53,6 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                 <Avatar
                     className={classes.avatar}
                     src={currentUser?.photoURL}
-                    style={{backgroundColor: "#E73645"}}
                 >
                     <Typography variant="h4">
                         {currentUser?.displayName.charAt(0).toUpperCase()}
@@ -68,12 +68,12 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                         <Typography color="textSecondary">Shares: 4</Typography>
                     </div>
                 </div>
-                <div className={classes.navigationButtons}>
+                <div className={classes.navigationButtonsContainer}>
                     <Link to="new-recipe">
                         <Button
                             style={{ marginBottom: 10}}
                             fullWidth
-                            variant="contained"
+                            variant="outlined"
                             color="primary"
                         >
                             Create a Recipe
@@ -82,7 +82,7 @@ export default function ProfileCard({ recipesCount, likeCount }) {
 
                     <Button
                         fullWidth
-                        variant="contained"
+                        variant="outlined"
                         color="primary"
                     >
                         Edit your recipes

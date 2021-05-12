@@ -9,14 +9,14 @@ import AuthenticationProvider from './context/AuthenticationContext';
 import { SnackbarProvider } from 'notistack';
 import CreateRecipe from './components/CreateRecipe/CreateRecipe';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import indigo from "@material-ui/core/colors/indigo";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#2c8c99"
-    },
-    secondary: {
-      main: "#E73645"
+      light: indigo[200],
+      main: indigo[400],
+      dark: indigo[500],
     }
   },
   

@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         height: theme.spacing(5),
         width: theme.spacing(5),
-        backgroundColor: "#E73645",
+        backgroundColor: theme.palette.primary.main,
     }
 }))
 
