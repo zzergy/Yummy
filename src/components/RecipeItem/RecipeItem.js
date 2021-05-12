@@ -19,7 +19,6 @@ import SaveRecipeDropdown from '../../SaveRecipeDropdown'
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
-        // width: "100%",
         backgroundColor: "#fefcff"
     },
     media: {
@@ -40,6 +39,7 @@ const useStyles = makeStyles(theme => ({
 export default function RecipeItem({ recipe }) {
     const classes = useStyles();
     const { currentUser } = useContext(AuthenticationContext);
+    const likedByCurrentUser = recipe.likes?.includes(currentUser?.uid);
 
     function handleLike() {
         const recipeLikes = recipe.likes || [];
@@ -51,8 +51,6 @@ export default function RecipeItem({ recipe }) {
             db.set(updatedRecipeWithoutId);
         }
     }
-
-    const likedByCurrentUser = recipe.likes?.includes(currentUser?.uid);
 
     return (
         <Card className={classes.mainContainer}>
