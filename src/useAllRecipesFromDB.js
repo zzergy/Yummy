@@ -15,7 +15,7 @@ export default function useAllRecipesFromDB() {
             for (let id in recipes) {
                 recipesList.push({...recipes[id], id});
             }
-            setRecipes(recipesList);
+            setRecipes(recipesList.reverse());
         });
     }, [])
 
