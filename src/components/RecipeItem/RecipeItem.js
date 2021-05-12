@@ -89,7 +89,7 @@ export default function RecipeItem({ recipe }) {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton disabled={likedByCurrentUser} aria-label="add to favorites" onClick={handleLike}>
-                    <FavoriteIcon className={likedByCurrentUser && classes.disabledLikeButton} />
+                    <FavoriteIcon className={likedByCurrentUser ? classes.disabledLikeButton : ""} />
                 </IconButton>
                 <Typography>{recipe.likes?.length}</Typography>
             </CardActions>
