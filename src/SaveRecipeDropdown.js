@@ -18,6 +18,10 @@ export default function SaveRecipeDropdown({ recipe }) {
         setAnchorElement(event.currentTarget);
     }
 
+    const handleExitPopUp = () => {
+        setAnchorElement(null)
+    }
+
     const handleClose = () => {
         setAnchorElement(null);
 
@@ -64,7 +68,7 @@ export default function SaveRecipeDropdown({ recipe }) {
             <Popover
                 open={!!anchorElement}
                 anchorEl={anchorElement}
-                onClose={handleClose}
+                onClose={handleExitPopUp}
                 disableRestoreFocus
                 anchorOrigin={{
                     vertical: 'bottom',
