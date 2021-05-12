@@ -8,10 +8,24 @@ import 'fontsource-roboto';
 import AuthenticationProvider from './context/AuthenticationContext';
 import { SnackbarProvider } from 'notistack';
 import CreateRecipe from './components/CreateRecipe/CreateRecipe';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#2c8c99"
+    },
+    secondary: {
+      main: "#E73645"
+    }
+  },
+  
+});
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
+      <div className="App">
       <Router>
         <SnackbarProvider maxSnack={3}>
           <AuthenticationProvider>
@@ -27,6 +41,7 @@ function App() {
         </SnackbarProvider>
       </Router>
     </div>
+    </ThemeProvider>
   );
 }
 
