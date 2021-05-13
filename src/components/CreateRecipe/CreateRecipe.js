@@ -1,8 +1,6 @@
 import { Button, Container, Grid } from '@material-ui/core';
 import React, { useState, useContext, useRef } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import { Typography, TextField } from "@material-ui/core"
 import firebase from 'firebase/app';
 import "firebase/storage"
 import "firebase/database";
@@ -10,6 +8,7 @@ import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom'
 import NavigationBar from '../NavigationBar/NavigationBar';
+import LoadingScreen from '../LoadingScreen';
 
 export default function CreateRecipe() {
     const { currentUser } = useContext(AuthenticationContext);
@@ -22,7 +21,7 @@ export default function CreateRecipe() {
         likes: []
     });
     const [fileData, setFileData] = useState();
-
+    const [toggleLoadingScreen, setToggleLoadingScreen] = useState(false);
     const history = useHistory();
 
     function currentDate() {
@@ -88,6 +87,10 @@ export default function CreateRecipe() {
                 //------------- DB -------------
                 const db = firebase.database().ref("recipes");
 
+                //trigger loading screen
+                setToggleLoadingScreen(true);
+
+              
                 //Submit the form data to the DB
                 return db.push({
                     ...formData,
@@ -99,14 +102,21 @@ export default function CreateRecipe() {
                     likes: []
                 })
             }).then(() => {
-                history.push('/profile');
-
-                enqueueSnackbar(
-                    "Publish successful!", {
-                    preventDuplicate: true,
-                    variant: "success"
-                });
+                setTimeout(()=>{
+                    setToggleLoadingScreen(false);
+                    history.push('/profile');
+                    setToggleLoadingScreen(false);
+    
+                    enqueueSnackbar(
+                        "Publish successful!", {
+                        preventDuplicate: true,
+                        variant: "success"
+                    });
+                }, 1000)
+                
             }).catch((error) => {
+                setToggleLoadingScreen(false);
+
                 enqueueSnackbar(
                     error.message, {
                     preventDuplicate: true,
@@ -115,12 +125,12 @@ export default function CreateRecipe() {
             });
         }
     }
-    
+
     return (
         <>
+            {toggleLoadingScreen ? <LoadingScreen toggle={toggleLoadingScreen} /> : ""}
             <NavigationBar />
             <Container component="form" onSubmit={handleSubmit}>
-                <CssBaseline />
                 <Grid container spacing={2}>
                     {/* Title */}
                     <Grid item xs={12} style={{ margin: 15 }}>
