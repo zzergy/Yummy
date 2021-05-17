@@ -6,6 +6,7 @@ import RecipeItem from './RecipeItem/RecipeItem'
 import { Container, Grid } from '@material-ui/core';
 import useAllRecipesFromDB from '../useAllRecipesFromDB';
 import { makeStyles } from "@material-ui/core"
+import ScrollToTopArrow from "./ScrollToTopArrow"
 
 const useStyles = makeStyles(theme => ({
     recipeCard: {
@@ -24,7 +25,7 @@ export default function Home() {
             <div className='wrapper'>
 
                 <Container className="main">
-                    <Grid container spacing={6}>
+                    <Grid container spacing={8}>
                         {recipes ? recipes.map((recipe, index) => (
                             <Grid item container justify="center" xs={12} md={6} lg={4} key={index}>
                                 <Grid item >
@@ -40,6 +41,7 @@ export default function Home() {
                     <Footer />
                 </div>
             </div>
+            <ScrollToTopArrow/>
         </>
     );
 }
