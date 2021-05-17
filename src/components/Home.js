@@ -6,7 +6,7 @@ import RecipeItem from './RecipeItem/RecipeItem'
 import { Container, Grid } from '@material-ui/core';
 import useAllRecipesFromDB from '../useAllRecipesFromDB';
 import { makeStyles } from "@material-ui/core"
-import ScrollToTopArrow from "./ScrollToTopArrow"
+import ScrollToTopButton from "./ScrollToTopButton"
 
 const useStyles = makeStyles(theme => ({
     recipeCard: {
@@ -41,7 +41,7 @@ export default function Home() {
                     <Footer />
                 </div>
             </div>
-            <ScrollToTopArrow/>
+            <ScrollToTopButton/>
         </>
     );
 }
