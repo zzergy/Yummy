@@ -22,7 +22,25 @@ export default function SaveRecipeDropdown({ recipe }) {
         setAnchorElement(null)
     }
 
-    const handleClose = () => {
+    const deleteRecipe = () => {
+        setAnchorElement(null);
+        const targetedRecipe = firebase.database().ref("recipes").child(`${recipe.id}`);
+        targetedRecipe.remove().then(() => {
+            enqueueSnackbar(
+                "Successfuly deleted recipe", {
+                preventDuplicate: true,
+                variant: "success"
+            });
+        }).catch((error) => {
+            enqueueSnackbar(
+                error.message, {
+                preventDuplicate: true,
+                variant: "error"
+            });
+        })
+    }
+
+    const saveRecipe = () => {
         setAnchorElement(null);
 
         //Check if the recipe is already saved
@@ -79,7 +97,14 @@ export default function SaveRecipeDropdown({ recipe }) {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={handleClose}>Save Recipe</MenuItem>
+                <MenuItem onClick={saveRecipe}>Save</MenuItem>
+                {currentUser?.uid === recipe.authorUid &&
+                    <>
+                        <MenuItem>Edit</MenuItem>
+                        <MenuItem onClick={deleteRecipe}>Delete</MenuItem>
+                    </>
+                }
+
             </Popover>
         </div>
     )

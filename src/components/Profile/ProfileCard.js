@@ -79,14 +79,6 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                             Create a Recipe
                     </Button>
                     </Link>
-
-                    <Button
-                        fullWidth
-                        variant="outlined"
-                        color="primary"
-                    >
-                        Edit your recipes
-                    </Button>
                 </div>
             </div>
         </Card>
