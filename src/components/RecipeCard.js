@@ -11,11 +11,11 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import React, { useContext } from 'react';
-import { AuthenticationContext } from '../../context/AuthenticationContext';
-import noImageFound from '../../img/no-image-found.png'
+import { AuthenticationContext } from '../context/AuthenticationContext';
+import noImageFound from '../img/no-image-found.png'
 import firebase from 'firebase/app';
 import "firebase/database";
-import SaveRecipeDropdown from '../../SaveRecipeDropdown'
+import SaveRecipeDropdown from '../SaveRecipeDropdown'
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function RecipeItem({ recipe }) {
+export default function RecipeCard({ recipe }) {
     const classes = useStyles();
     const { currentUser } = useContext(AuthenticationContext);
     const likedByCurrentUser = recipe.likes?.includes(currentUser?.uid);

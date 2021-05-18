@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NavigationBar from './NavigationBar/NavigationBar';
 import './Home.css';
 import Footer from './Footer'
-import RecipeItem from './RecipeItem/RecipeItem'
+import RecipeCard from './RecipeCard'
 import { Container, Grid } from '@material-ui/core';
 import useAllRecipesFromDB from '../useAllRecipesFromDB';
 import { makeStyles } from "@material-ui/core"
@@ -30,7 +30,7 @@ export default function Home() {
                             <Grid item container justify="center" xs={12} md={6} lg={4} key={index}>
                                 <Grid item >
                                     <div className={classes.recipeCard}>
-                                        <RecipeItem recipe={recipe} />
+                                        <RecipeCard recipe={recipe} />
                                     </div>
                                 </Grid>
                             </Grid>
