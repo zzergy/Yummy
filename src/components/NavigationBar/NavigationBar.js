@@ -3,8 +3,9 @@ import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link, useHistory } from 'react-router-dom';
 import './NavigationBar.css'
 import logo from '../logo.png'
-import { Avatar, makeStyles } from '@material-ui/core';
+import { Avatar, makeStyles, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import useAllRecipesFromDB from "../../useAllRecipesFromDB"
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -14,16 +15,18 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function NavigationBar() {
+export default function NavigationBar({ handleSearch }) {
 
     const { currentUser, loadedUserFromStorage } = useContext(AuthenticationContext);
     const { logout } = useContext(AuthenticationContext);
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const classes = useStyles();
+    const recipes = useAllRecipesFromDB();
     const [navigationBarStyles, setNavigationBarStyles] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
-    async function handleClick() {
+    async function handleLogout() {
         try {
             await logout();
             history.push('/');
@@ -52,7 +55,7 @@ export default function NavigationBar() {
             const firstLetter = currentUser?.displayName?.charAt(0).toUpperCase();
             return (
                 <>
-                    <button onClick={handleClick} className='logout-button'>Log Out</button>
+                    <button onClick={handleLogout} className='logout-button'>Log Out</button>
                     <Link to="/profile" style={{ textDecoration: 'none' }}>
                         <Avatar
                             className={classes.avatar}
@@ -69,10 +72,20 @@ export default function NavigationBar() {
         }
     }
 
+    const onSearchValueChange = (event) => {
+        setSearchTerm(event.target.value);
+        handleSearch(event.target.value)
+    }
+
     return (
         <div className={navigationBarStyles ? "nav scrolled" : "nav"}>
             <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
-            <input type='text' placeholder='Search..' className='search-bar' />
+            <TextField
+                variant="outlined"
+                label="Search.."
+                onChange={onSearchValueChange}
+                value={searchTerm}
+            />
             <div className="user-info-wrapper">{userNavigationButton()}</div>
         </div>
     );

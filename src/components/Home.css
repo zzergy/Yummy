@@ -7,17 +7,12 @@
     'footer';
 }
 
-/* .navigation {
-    grid-area: 'navigation';
-    grid-column-start: 1;
-    grid-column-end: 6;
-} */
-
 .main {
     grid-area: main;
     grid-column-start: 3;
     grid-column-end: auto;
     padding: 45px;
+    min-height: 85vh;
 }
 
 .footer {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavigationBar from './NavigationBar/NavigationBar';
 import './Home.css';
 import Footer from './Footer'
@@ -18,30 +18,40 @@ const useStyles = makeStyles(theme => ({
 export default function Home() {
     const classes = useStyles();
     const recipes = useAllRecipesFromDB();
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
+
+    const handleSearch = (value) => {
+        const recipesWithSearchTerm = recipes.filter(recipe => recipe.title.toLowerCase().includes(value.toLowerCase()));
+        setFilteredRecipes(recipesWithSearchTerm);
+    }
+
+    useEffect(() => {
+        setFilteredRecipes(recipes);
+    }, [recipes]);
 
     return (
         <>
-            <NavigationBar />
+            <NavigationBar handleSearch={handleSearch} />
             <div className='wrapper'>
-
                 <Container className="main">
                     <Grid container spacing={8}>
-                        {recipes ? recipes.map((recipe, index) => (
-                            <Grid item container justify="center" xs={12} md={6} lg={4} key={index}>
-                                <Grid item >
-                                    <div className={classes.recipeCard}>
-                                        <RecipeCard recipe={recipe} />
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        )) : ''}
+                        {filteredRecipes.map((recipe, index) => {
+                            const lgWidth = filteredRecipes.length === 1 ? 12 : 4;
+                            return <Grid item container justify="center" xs={12} md={6} lg={lgWidth} key={index}>
+                                    <Grid item>
+                                        <div className={classes.recipeCard}>
+                                            <RecipeCard recipe={recipe} />
+                                        </div>
+                                    </Grid>
+                                </Grid>;
+                        })}
                     </Grid>
                 </Container>
                 <div className='footer'>
                     <Footer />
                 </div>
             </div>
-            <ScrollToTopButton/>
+            <ScrollToTopButton />
         </>
     );
 }
