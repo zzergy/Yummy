@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link, useHistory } from 'react-router-dom';
-import './NavigationBar.css'
-import logo from '../logo.png'
+import './NavigationBar.css';
+import logo from '../logo.png';
 import { Avatar, makeStyles, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-import useAllRecipesFromDB from "../../useAllRecipesFromDB"
+import { useLocation } from 'react-router-dom';
+import { LocationCity } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -22,7 +23,7 @@ export default function NavigationBar({ handleSearch }) {
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
     const classes = useStyles();
-    const recipes = useAllRecipesFromDB();
+    const location = useLocation();
     const [navigationBarStyles, setNavigationBarStyles] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -74,7 +75,9 @@ export default function NavigationBar({ handleSearch }) {
 
     const onSearchValueChange = (event) => {
         setSearchTerm(event.target.value);
-        handleSearch(event.target.value)
+        if (location.pathname === "/") {
+            handleSearch(event.target.value)
+        } 
     }
 
     return (
