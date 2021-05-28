@@ -10,12 +10,13 @@ import {
     IconButton
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import noImageFound from '../img/no-image-found.png'
 import firebase from 'firebase/app';
 import "firebase/database";
 import SaveRecipeDropdown from '../SaveRecipeDropdown'
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -39,16 +40,36 @@ const useStyles = makeStyles(theme => ({
 export default function RecipeCard({ recipe }) {
     const classes = useStyles();
     const { currentUser } = useContext(AuthenticationContext);
-    const likedByCurrentUser = recipe.likes?.includes(currentUser?.uid);
+    const [likedByCurrentUser, setLikedByCurrentUser] = useState(recipe?.likes?.includes(currentUser.uid));
+    const { enqueueSnackbar } = useSnackbar();
 
     function handleLike() {
-        const recipeLikes = recipe.likes || [];
-        const isLiked = recipeLikes.includes(currentUser.uid);
-        if (!isLiked) {
+        if (currentUser) {
+            const recipeLikes = recipe.likes || [];
+            const isLiked = recipeLikes.includes(currentUser.uid);
             const db = firebase.database().ref(`recipes`).child(recipe.id);
-            const updatedRecipeWithoutId = { ...recipe, likes: [...recipeLikes, currentUser.uid] };
-            delete updatedRecipeWithoutId.id;
-            db.set(updatedRecipeWithoutId);
+
+            if (!isLiked) {
+                setLikedByCurrentUser(true);
+                const updatedRecipeWithoutId = { ...recipe, likes: [...recipeLikes, currentUser.uid] };
+                delete updatedRecipeWithoutId.id;
+                db.set(updatedRecipeWithoutId);
+            }
+    
+            if (isLiked) {
+                setLikedByCurrentUser(false);
+                const updatedRecipeWithoutId = { ...recipe, likes: recipeLikes.filter(item => item !== currentUser.uid) };
+                delete updatedRecipeWithoutId.id;
+                db.set(updatedRecipeWithoutId);
+            }
+    
+            setLikedByCurrentUser(!isLiked);
+        } else {
+            enqueueSnackbar(
+                "You have to be registered in order to like", {
+                preventDuplicate: true,
+                variant: "info"
+            });
         }
     }
 
@@ -88,7 +109,7 @@ export default function RecipeCard({ recipe }) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton disabled={likedByCurrentUser} aria-label="add to favorites" onClick={handleLike}>
+                <IconButton aria-label="add to favorites" onClick={handleLike}>
                     <FavoriteIcon className={likedByCurrentUser ? classes.disabledLikeButton : ""} />
                 </IconButton>
                 <Typography>{recipe.likes?.length}</Typography>
