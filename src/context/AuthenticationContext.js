@@ -8,6 +8,7 @@ export const AuthenticationContext = React.createContext({
     login: () => { },
     logout: () => { },
     signUpWithGoogle: () => { },
+    resetPassword: () => { }
 });
 
 export default function AuthenticationProvider({ children }) {
@@ -49,6 +50,9 @@ export default function AuthenticationProvider({ children }) {
         return firebase.auth().signInWithPopup(provider);
     }
 
+    function resetPassword(email) {
+       return auth.sendPasswordResetEmail(email);
+    }
     //---------------------------------------------------------------------
 
     const values = {
@@ -57,6 +61,7 @@ export default function AuthenticationProvider({ children }) {
         login,
         logout,
         signUpWithGoogle,
+        resetPassword,
         loadedUserFromStorage: loadedUserFromStorage.current
     }
 

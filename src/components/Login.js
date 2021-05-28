@@ -1,15 +1,25 @@
 import React, { useState, useContext } from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Grid,
+  Typography,
+  Container,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Modal,
+  makeStyles,
+  Fade,
+  IconButton
+} from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
 import background from "../img/1.jpg"
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 
 const useStyles = makeStyles((theme) => ({
   backgroudDiv: {
@@ -35,7 +45,20 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0, 0),
   },
   signupLink: {
-    margin: theme.spacing(3, 0, 0)
+    margin: theme.spacing(2, 0, 0)
+  },
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  cardHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  resetPasswordButton: {
+    display: "flex",
+    justifyContent: "center",
   }
 }));
 
@@ -48,10 +71,10 @@ export default function Login() {
     confirmPassword: '',
   });
   const { enqueueSnackbar } = useSnackbar();
-
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { login, signUpWithGoogle } = useContext(AuthenticationContext);
+  const { login, signUpWithGoogle, resetPassword } = useContext(AuthenticationContext);
 
   function handleChange(event) {
     //Set the state
@@ -66,9 +89,11 @@ export default function Login() {
       enqueueSnackbar(
         loginError.message, {
         preventDuplicate: true,
+        variant: "error"
       });
     }
   }
+
   async function handleLogin(event) {
     event.preventDefault();
 
@@ -84,22 +109,91 @@ export default function Login() {
       enqueueSnackbar(
         loginError.message, {
         preventDuplicate: true,
+        variant: "error"
       });
     }
     setLoading(false);
   }
 
+  // ---------------- Reset Password ---------------- 
+
+  const handleOpenPopup = () => {
+    setOpen(true);
+  }
+
+  const handleLCosePopup = () => {
+    setTextFieldState({...textFieldState, email: ""});
+    setOpen(false);
+  }
+
+  const handleResetPassword = (event) => {
+    event.preventDefault();
+    const resetPasswordPromise = resetPassword(textFieldState.email);
+    resetPasswordPromise.then(() => {
+      enqueueSnackbar(
+        "An email has been sent to your inbox. Please check your spam too.", {
+        preventDuplicate: true,
+        variant: "success"
+      });
+      setOpen(false);
+    }).catch((error) => {
+      enqueueSnackbar(
+        error.message, {
+        preventDuplicate: true,
+        variant: "error"
+      });
+    })
+  }
+
+  const modalContent = (
+    <Fade in={open}>
+      <Container maxWidth="sm">
+        <Card component="form" onSubmit={handleResetPassword}>
+          <CardHeader
+            className={classes.cardHeader}
+            title={<Typography variant="h5">Password reset</Typography>}
+            action={<IconButton aria-label="close" onClick={handleLCosePopup}>
+              <CloseRoundedIcon />
+            </IconButton>}
+            subheader={<Typography variant="caption" color="textSecondary">Please note that the password reset does not work for users registered with Google.</Typography>}
+          >
+          </CardHeader>
+          <CardContent>
+            <TextField
+              variant="outlined"
+              fullWidth
+              id="email"
+              name="email"
+              label="Email"
+              type="email"
+              onChange={handleChange}
+              value={textFieldState.email}
+            />
+          </CardContent>
+          <CardActions className={classes.resetPasswordButton}>
+            <Button
+              style={{ minWidth: 400, maxWidth: 400, marginBottom: 10 }}
+              type="submit"
+              variant="outlined"
+              color="secondary"
+            >
+              Send pasword reset email
+          </Button>
+          </CardActions>
+        </Card>
+      </Container>
+    </Fade>
+  )
+  //------------------------------------------------
 
   return (
     <div className={classes.backgroudDiv}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.container}>
-
           <Typography component="h1" variant="h5">
             Login
-        </Typography>
-
+          </Typography>
           <form className={classes.form} noValidate onSubmit={handleLogin}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -132,8 +226,8 @@ export default function Login() {
                   value={textFieldState.password}
                 />
               </Grid>
-              <Grid item xs={12}>
 
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   fullWidth
@@ -143,7 +237,7 @@ export default function Login() {
                   disabled={loading}
                 >
                   Login
-            </Button>
+                </Button>
 
                 <Button
                   fullWidth
@@ -153,18 +247,32 @@ export default function Login() {
                   onClick={handleSignUpWithGoogle}
                 >
                   Sign In with Google
-            </Button>
-              </Grid>
-            </Grid>
-
-            <Grid container item justify="center">
-              <Grid item>
-                <Typography className={classes.signupLink}>
-                  Don't have an account?<Link to='/signup'> Sign up</Link>
-                </Typography>
+                </Button>
               </Grid>
             </Grid>
           </form>
+
+          <Grid container item justify="center">
+            <Grid item>
+              <Typography className={classes.signupLink}>
+                Don't have an account?<Link to='/signup'> Sign up</Link>
+              </Typography>
+            </Grid>
+
+            <Grid item>
+              <Typography className={classes.signupLink}>
+                Forgot your password?<Link to='#' onClick={handleOpenPopup}> Reset password</Link>
+              </Typography>
+
+              <Modal
+                open={open}
+                className={classes.modal}
+                closeAfterTransition
+              >
+                {modalContent}
+              </Modal>
+            </Grid>
+          </Grid>
         </div>
       </Container>
     </div>
