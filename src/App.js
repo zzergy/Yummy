@@ -10,6 +10,7 @@ import { SnackbarProvider } from 'notistack';
 import CreateRecipe from './components/CreateRecipe/CreateRecipe';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import indigo from "@material-ui/core/colors/indigo";
+import PrivateRoute from './components/PrivateRoute';
 
 const theme = createMuiTheme({
   palette: {
@@ -33,9 +34,9 @@ function App() {
               <Route exact path='/' component={Home} />
               <Route path='/signup' component={SignUp} />
               <Route path='/login' component={Login} />
-              <Route path='/profile' component={Profile} />
+              <PrivateRoute path='/profile' component={Profile} />
               <Route path='/view-recipe' component={ViewRecipe} />
-              <Route path='/new-recipe' component={CreateRecipe} />
+              <PrivateRoute path='/new-recipe' component={CreateRecipe} />
             </Switch>
           </AuthenticationProvider>
         </SnackbarProvider>
