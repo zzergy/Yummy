@@ -83,7 +83,7 @@ export default function SaveRecipeDropdown({ recipe }) {
                 <MoreVertIcon />
             </IconButton>
 
-            <Popover
+            {currentUser ? <Popover
                 open={!!anchorElement}
                 anchorEl={anchorElement}
                 onClose={handleExitPopUp}
@@ -105,7 +105,7 @@ export default function SaveRecipeDropdown({ recipe }) {
                     </>
                 }
 
-            </Popover>
+            </Popover> : ""}
         </div>
     )
 }
