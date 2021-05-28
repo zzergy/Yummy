@@ -20,7 +20,6 @@ const theme = createMuiTheme({
       dark: indigo[500],
     }
   },
-  
 });
 
 function App() {
