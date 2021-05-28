@@ -60,7 +60,7 @@ export default function Profile() {
                     <Grid item xs={6}>
                         <Grid container component={Card} style={{ background: "#fefcff" }} justify="center">
                             <Grid item xs={10}>
-                                <Typography variant="h5" align="center" className={classes.titles}>Liked Recipes</Typography>
+                                <Typography variant="h5" align="center" className={classes.titles}>Saved Recipes</Typography>
                                 <div style={{ marginBottom: 35 }}>
                                     <DisplayRecipesInProfilePage recipes={savedRecipesFromUser} />
                                 </div>
