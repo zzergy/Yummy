@@ -76,18 +76,19 @@ export default function NavigationBar({ handleSearch }) {
         setSearchTerm(event.target.value);
         if (location.pathname === "/") {
             handleSearch(event.target.value)
-        } 
+        }
     }
 
     return (
         <div className={navigationBarStyles ? "nav scrolled" : "nav"}>
             <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
-            <TextField
+            {location.pathname === "/" && <TextField
                 variant="outlined"
                 label="Search.."
                 onChange={onSearchValueChange}
                 value={searchTerm}
-            />
+            />}
+
             <div className="user-info-wrapper">{userNavigationButton()}</div>
         </div>
     );
