@@ -1,6 +1,11 @@
-import { Button, Container, Grid } from '@material-ui/core';
+import {
+    Button,
+    Container,
+    Grid,
+    Typography,
+    TextField
+} from '@material-ui/core';
 import React, { useState, useContext, useRef } from 'react';
-import { Typography, TextField } from "@material-ui/core"
 import firebase from 'firebase/app';
 import "firebase/storage"
 import "firebase/database";
@@ -90,7 +95,6 @@ export default function CreateRecipe() {
                 //trigger loading screen
                 setToggleLoadingScreen(true);
 
-              
                 //Submit the form data to the DB
                 return db.push({
                     ...formData,
@@ -102,18 +106,17 @@ export default function CreateRecipe() {
                     likes: []
                 })
             }).then(() => {
-                setTimeout(()=>{
+                setTimeout(() => {
                     setToggleLoadingScreen(false);
                     history.push('/profile');
                     setToggleLoadingScreen(false);
-    
+
                     enqueueSnackbar(
                         "Publish successful!", {
                         preventDuplicate: true,
                         variant: "success"
                     });
                 }, 1000)
-                
             }).catch((error) => {
                 setToggleLoadingScreen(false);
 
