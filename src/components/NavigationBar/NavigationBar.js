@@ -6,7 +6,6 @@ import logo from '../logo.png';
 import { Avatar, makeStyles, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { useLocation } from 'react-router-dom';
-import { LocationCity } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
     avatar: {
