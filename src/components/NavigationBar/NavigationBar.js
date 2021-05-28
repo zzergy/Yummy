@@ -38,6 +38,7 @@ export default function NavigationBar({ handleSearch }) {
         }
     }
 
+    //Scroll to top
     window.addEventListener('scroll', () => {
         if (window.scrollY >= 69) {
             setNavigationBarStyles(true);
@@ -88,7 +89,6 @@ export default function NavigationBar({ handleSearch }) {
                 onChange={onSearchValueChange}
                 value={searchTerm}
             />}
-
             <div className="user-info-wrapper">{userNavigationButton()}</div>
         </div>
     );

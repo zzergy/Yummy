@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 export default function RecipeCard({ recipe }) {
     const classes = useStyles();
     const { currentUser } = useContext(AuthenticationContext);
-    const [likedByCurrentUser, setLikedByCurrentUser] = useState(recipe?.likes?.includes(currentUser.uid));
+    const [likedByCurrentUser, setLikedByCurrentUser] = useState(recipe?.likes?.includes(currentUser?.uid));
     const { enqueueSnackbar } = useSnackbar();
 
     function handleLike() {
