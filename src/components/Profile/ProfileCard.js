@@ -3,6 +3,7 @@ import { Avatar, Typography, Card, Button } from '@material-ui/core';
 import { AuthenticationContext } from "../../context/AuthenticationContext";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import ChangePassword from "../ChangePassword"
 
 const useStyles = makeStyles(theme => ({
     cardRoot: {
@@ -71,7 +72,7 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                 <div className={classes.navigationButtonsContainer}>
                     <Link to="new-recipe">
                         <Button
-                            style={{ marginBottom: 10}}
+                            style={{ marginBottom: 10 }}
                             fullWidth
                             variant="outlined"
                             color="primary"
@@ -79,6 +80,7 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                             Create a Recipe
                     </Button>
                     </Link>
+                    <ChangePassword />
                 </div>
             </div>
         </Card>
