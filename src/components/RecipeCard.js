@@ -40,8 +40,8 @@ const useStyles = makeStyles(theme => ({
 export default function RecipeCard({ recipe }) {
     const classes = useStyles();
     const { currentUser } = useContext(AuthenticationContext);
-    const [likedByCurrentUser, setLikedByCurrentUser] = useState(recipe?.likes?.includes(currentUser?.uid));
     const { enqueueSnackbar } = useSnackbar();
+    const likedByCurrentUser = recipe?.likes?.includes(currentUser?.uid);
 
     function handleLike() {
         if (currentUser) {
@@ -50,20 +50,16 @@ export default function RecipeCard({ recipe }) {
             const db = firebase.database().ref(`recipes`).child(recipe.id);
 
             if (!isLiked) {
-                setLikedByCurrentUser(true);
                 const updatedRecipeWithoutId = { ...recipe, likes: [...recipeLikes, currentUser.uid] };
                 delete updatedRecipeWithoutId.id;
                 db.set(updatedRecipeWithoutId);
             }
     
             if (isLiked) {
-                setLikedByCurrentUser(false);
                 const updatedRecipeWithoutId = { ...recipe, likes: recipeLikes.filter(item => item !== currentUser.uid) };
                 delete updatedRecipeWithoutId.id;
                 db.set(updatedRecipeWithoutId);
             }
-    
-            setLikedByCurrentUser(!isLiked);
         } else {
             enqueueSnackbar(
                 "You have to be registered in order to like", {
