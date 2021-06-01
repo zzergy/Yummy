@@ -8,7 +8,6 @@ import ProfileCard from './ProfileCard';
 import DisplayRecipesInProfilePage from './DisplayRecipesInProfilePage';
 import useAllRecipesFromDB from '../../useAllRecipesFromDB';
 import { makeStyles } from "@material-ui/core"
-import useAllSavedRecipesFromCurrentUser from '../../useAllSavedRecipesFromCurrentUser';
 
 const useStyles = makeStyles(theme => ({
     titles: {
@@ -20,9 +19,12 @@ const useStyles = makeStyles(theme => ({
 export default function Profile() {
     const { currentUser } = useContext(AuthenticationContext);
     const classes = useStyles();
-
     const recipes = useAllRecipesFromDB();
-    const savedRecipesFromUser = useAllSavedRecipesFromCurrentUser();
+
+    const savedRecipesFromUser = recipes?.filter(recipe => {
+        const savedBy = recipe?.savedBy || []; 
+        return savedBy.includes(currentUser?.uid);
+    });
 
     const currentUserRecipes = recipes?.filter(recipe => { return (recipe.authorUid === currentUser?.uid) });
     const recipesCount = currentUserRecipes?.length;
@@ -34,6 +36,7 @@ export default function Profile() {
             return acc;
         }
     }, 0 /* The initial value of the previousValue parameter */);
+    
     return (
         <>
         <NavigationBar />

@@ -5,14 +5,11 @@ import { AuthenticationContext } from './context/AuthenticationContext';
 import firebase from 'firebase/app';
 import "firebase/database";
 import { useSnackbar } from 'notistack';
-import useAllSavedRecipesFromCurrentUser from './useAllSavedRecipesFromCurrentUser'
 
 export default function SaveRecipeDropdown({ recipe }) {
     const [anchorElement, setAnchorElement] = useState(null);
     const { currentUser } = useContext(AuthenticationContext);
     const { enqueueSnackbar } = useSnackbar();
-    const savedRecipes = useAllSavedRecipesFromCurrentUser();
-
     const handleClick = (event) => {
         //If there is an element it will read as true
         setAnchorElement(event.currentTarget);
@@ -43,20 +40,18 @@ export default function SaveRecipeDropdown({ recipe }) {
     const saveRecipe = () => {
         setAnchorElement(null);
 
+        const currentRecipeSavedByArray = recipe?.savedBy || [];
+
         //Check if the recipe is already saved
-        const alreadySaved = savedRecipes.some(savedRecipe => savedRecipe.id === recipe.id);
+        const alreadySaved = currentRecipeSavedByArray.some(userId => userId === currentUser?.uid);
 
-        //If not saved continue..
         if (!alreadySaved) {
-            //create a reference to the db
-            const userSavedRecipesRef = firebase.database()
-                .ref("usersInfo")
-                .child(`${currentUser?.uid}`)
-                .child("savedRecipes")
-                .child(recipe.id);
+            //Create a reference to the db
+            const userSavedRecipesRef = firebase.database().ref(`recipes/${recipe.id}`);
+            const updatedRecipe = { ...recipe, savedBy: [...currentRecipeSavedByArray, currentUser?.uid] }
 
-            //Add the new array to the db
-            userSavedRecipesRef.set(recipe).then(() => {
+            //Update the database
+            userSavedRecipesRef.set(updatedRecipe).then(() => {
                 enqueueSnackbar(
                     "Recipe Saved !", {
                     variant: "success"
