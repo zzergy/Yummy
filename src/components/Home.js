@@ -13,6 +13,10 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 380,
         minWidth: 380,
     },
+    recipeContainer: {
+        display: "flex",
+        justifyContent:"space-evenly"
+    }
 }));
 
 export default function Home() {
@@ -34,10 +38,10 @@ export default function Home() {
             <NavigationBar handleSearch={handleSearch} />
             <div className='wrapper'>
                 <Container className="main">
-                    <Grid container spacing={8}>
+                    <Grid container spacing={8} className={classes.recipeContainer}>
                         {filteredRecipes.map((recipe, index) => {
                             const lgWidth = filteredRecipes.length === 1 ? 12 : 4;
-                            return <Grid item container justify="center" xs={12} md={6} lg={lgWidth} key={index}>
+                            return <Grid item container justify="center" xs={12} md={6} lg={lgWidth} key={index} >
                                     <Grid item>
                                         <div className={classes.recipeCard}>
                                             <RecipeCard recipe={recipe} />
