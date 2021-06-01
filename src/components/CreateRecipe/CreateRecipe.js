@@ -69,42 +69,41 @@ export default function CreateRecipe() {
 
     function handleSubmit(event) {
         event.preventDefault();
-
         if (currentUser) {
-            new Promise((resolve, reject) => {
+            //------------- DB -------------
+            const db = firebase.database().ref("recipes");
+
+            //trigger loading screen
+            setToggleLoadingScreen(true);
+
+            //Submit the form data to the DB
+            return db.push({
+                ...formData,
+                date: currentDate(),
+                authorPhotoURL: currentUser.photoURL,
+                authorDisplayName: currentUser.displayName,
+                authorUid: currentUser.uid,
+                likes: [],
+                savedBy: []
+            }).then((savedRecipeRef)=> {
                 if (fileData) {
                     //------------- Upload the files to the storage -------------
-                    const storageRef = firebase.storage().ref(`${currentUser.uid}/${formData.title}`);
+                    const storageRef = firebase.storage().ref(`${currentUser.uid}/${savedRecipeRef.key}`);
                     const fileRef = storageRef.child(fileData.name);
                     const fileUploadPromise = fileRef.put(fileData);
 
                     //You handle that promsise here
-                    fileUploadPromise.then(() => {
-                        const fileURLPromise = firebase.storage().ref().child(`${currentUser.uid}/${formData.title}/${fileData.name}`).getDownloadURL();
+                    return fileUploadPromise.then(() => {
+                        const fileURLPromise = firebase.storage().ref(`${currentUser.uid}/${savedRecipeRef.key}/${fileData.name}`).getDownloadURL();
                         return fileURLPromise;
                     }).then((url) => {
-                        resolve(url);
-                    }).catch(reject);
+                        return savedRecipeRef.update({
+                            imageUrl: url
+                        });
+                    });
                 } else {
-                    resolve("");
+                    return Promise.resolve();
                 }
-            }).then((url) => {
-                //------------- DB -------------
-                const db = firebase.database().ref("recipes");
-
-                //trigger loading screen
-                setToggleLoadingScreen(true);
-
-                //Submit the form data to the DB
-                return db.push({
-                    ...formData,
-                    date: currentDate(),
-                    authorPhotoURL: currentUser.photoURL,
-                    authorDisplayName: currentUser.displayName,
-                    authorUid: currentUser.uid,
-                    imageUrl: url,
-                    likes: []
-                })
             }).then(() => {
                 setTimeout(() => {
                     setToggleLoadingScreen(false);
