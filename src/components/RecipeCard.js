@@ -10,7 +10,7 @@ import {
     IconButton
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthenticationContext } from '../context/AuthenticationContext';
 import noImageFound from '../img/no-image-found.png'
 import firebase from 'firebase/app';
