@@ -50,7 +50,7 @@ export default function ViewRecipe() {
                         Ingridients
                         </Typography>
                     <ul>
-                        {recipe?.ingreedientsList.split('\n').map((ingridient => (
+                        {recipe?.ingreedientsList?.split('\n').map((ingridient => (
                             <li>
                                 <Typography variant="body1">{ingridient}</Typography>
                             </li>
@@ -59,7 +59,7 @@ export default function ViewRecipe() {
                 </Grid>
 
                 <Grid item xs={12}>
-                    {recipe?.cookingInstructions.split('\n').map((instruction => (
+                    {recipe?.cookingInstructions?.split('\n').map((instruction => (
                         <><Typography variant="body1">{instruction}</Typography><br/></>
                     )))}
                 </Grid>
