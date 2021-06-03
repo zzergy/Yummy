@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Button,
   CssBaseline,
@@ -75,7 +75,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { login, signUpWithGoogle, resetPassword } = useContext(AuthenticationContext);
-
+  
   function handleChange(event) {
     //Set the state
     setTextFieldState({ ...textFieldState, [event.target.name]: event.target.value });
