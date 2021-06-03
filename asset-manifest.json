@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/Yummy/static/css/main.a44e1e69.chunk.css",
+    "main.js": "/Yummy/static/js/main.98ec6fe3.chunk.js",
+    "main.js.map": "/Yummy/static/js/main.98ec6fe3.chunk.js.map",
+    "runtime-main.js": "/Yummy/static/js/runtime-main.0e7bc158.js",
+    "runtime-main.js.map": "/Yummy/static/js/runtime-main.0e7bc158.js.map",
+    "static/css/2.757b6d6c.chunk.css": "/Yummy/static/css/2.757b6d6c.chunk.css",
+    "static/js/2.1e0520b3.chunk.js": "/Yummy/static/js/2.1e0520b3.chunk.js",
+    "static/js/2.1e0520b3.chunk.js.map": "/Yummy/static/js/2.1e0520b3.chunk.js.map",
+    "index.html": "/Yummy/index.html",
+    "static/css/2.757b6d6c.chunk.css.map": "/Yummy/static/css/2.757b6d6c.chunk.css.map",
+    "static/css/main.a44e1e69.chunk.css.map": "/Yummy/static/css/main.a44e1e69.chunk.css.map",
+    "static/js/2.1e0520b3.chunk.js.LICENSE.txt": "/Yummy/static/js/2.1e0520b3.chunk.js.LICENSE.txt",
+    "static/media/1.b1e54aed.jpg": "/Yummy/static/media/1.b1e54aed.jpg",
+    "static/media/logo.8f5dde8d.png": "/Yummy/static/media/logo.8f5dde8d.png",
+    "static/media/index.css": "/Yummy/static/media/roboto-vietnamese-400-normal.52cebac0.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0e7bc158.js",
+    "static/css/2.757b6d6c.chunk.css",
+    "static/js/2.1e0520b3.chunk.js",
+    "static/css/main.a44e1e69.chunk.css",
+    "static/js/main.98ec6fe3.chunk.js"
+  ]
+}
