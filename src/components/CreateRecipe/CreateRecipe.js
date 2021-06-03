@@ -37,7 +37,6 @@ export default function CreateRecipe() {
     const { enqueueSnackbar } = useSnackbar();
     const [formData, setFormData] = useState({
         title: '',
-        description: '',
         ingreedientsList: '',
         cookingInstructions: '',
         likes: []
@@ -173,24 +172,6 @@ export default function CreateRecipe() {
                                 value={formData.title}
                             />
                         </Grid>
-
-                        <Grid item xs={12}>
-                            <TextField
-                                className={classes.textFields}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="description"
-                                name="description"
-                                label="Dish Description"
-                                multiline
-                                rowsMax={8}
-                                rows={8}
-                                onChange={handleChange}
-                                value={formData.description}
-                            />
-                        </Grid>
-
                         <Grid item xs={12}>
                             <TextField
                                 className={classes.textFields}
@@ -200,8 +181,9 @@ export default function CreateRecipe() {
                                 name="ingreedientsList"
                                 label="Ingreedients List"
                                 multiline
-                                rowsMax={8}
-                                rows={8}
+                                required
+                                rowsMax={10}
+                                rows={10}
                                 onChange={handleChange}
                                 value={formData.ingreedientsList}
                             />
@@ -216,8 +198,9 @@ export default function CreateRecipe() {
                                 name="cookingInstructions"
                                 label="Cooking instructions"
                                 multiline
-                                rowsMax={10}
-                                rows={10}
+                                required
+                                rowsMax={18}
+                                rows={18}
                                 onChange={handleChange}
                                 value={formData.cookingInstructions}
                             />
@@ -228,7 +211,7 @@ export default function CreateRecipe() {
                                 <input type="file" ref={inputRef} style={{ display: "none" }} onChange={handleFileUploadData} />
                                 <Button
                                     onClick={triggerFileUpload}
-                                    variant="outlined"
+                                    variant="contained"
                                     color="secondary"
                                 >
                                     Upload Cover Image

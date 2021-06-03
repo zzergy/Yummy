@@ -17,10 +17,11 @@ import firebase from 'firebase/app';
 import "firebase/database";
 import SaveRecipeDropdown from '../SaveRecipeDropdown'
 import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
-        backgroundColor: "#fefcff"
+        backgroundColor: "#fefcff",
     },
     media: {
         height: 0,
@@ -54,7 +55,7 @@ export default function RecipeCard({ recipe }) {
                 delete updatedRecipeWithoutId.id;
                 db.set(updatedRecipeWithoutId);
             }
-    
+
             if (isLiked) {
                 const updatedRecipeWithoutId = { ...recipe, likes: recipeLikes.filter(item => item !== currentUser.uid) };
                 delete updatedRecipeWithoutId.id;
@@ -70,46 +71,49 @@ export default function RecipeCard({ recipe }) {
     }
 
     return (
-        <Card className={classes.mainContainer}>
-            <CardHeader
-                className={classes.header}
-                avatar={<Avatar
-                    aria-label="recipe"
-                    className={classes.avatar}
-                    src={recipe.authorPhotoURL}
-                >
-                    {recipe.authorDisplayName.charAt(0).toUpperCase()}
-                </Avatar>}
-                title={recipe.title}
-                subheader={recipe.date}
-                action={
-                    currentUser && <SaveRecipeDropdown recipe={recipe} />
-                }
-                titleTypographyProps={
-                    {
-                        noWrap: true,
-                        style: {
-                            width: '245px'
+            <Card className={classes.mainContainer}>
+                <CardHeader
+                    className={classes.header}
+                    avatar={<Avatar
+                        aria-label="recipe"
+                        className={classes.avatar}
+                        src={recipe.authorPhotoURL}
+                    >
+                        {recipe.authorDisplayName.charAt(0).toUpperCase()}
+                    </Avatar>}
+                    title={recipe.authorDisplayName}
+                    subheader={recipe.date}
+                    action={
+                        currentUser && <SaveRecipeDropdown recipe={recipe} />
+                    }
+                    titleTypographyProps={
+                        {
+                            noWrap: true,
+                            style: {
+                                width: '245px'
+                            }
                         }
                     }
-                }
-            />
-            <CardMedia
-                className={classes.media}
-                image={recipe.imageUrl ? recipe.imageUrl : noImageFound}
-                title="dish"
-            />
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 5 }}>
-                    {recipe.description}
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" onClick={handleLike}>
-                    <FavoriteIcon className={likedByCurrentUser ? classes.disabledLikeButton : ""} />
-                </IconButton>
-                <Typography>{recipe.likes?.length}</Typography>
-            </CardActions>
-        </Card>
+                />
+                <Link to={"/view-recipe/" + recipe.id}>
+                    <CardMedia
+                        className={classes.media}
+                        image={recipe.imageUrl ? recipe.imageUrl : noImageFound}
+                        title="dish"
+                    />
+                </Link>
+                <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p" style={{ marginLeft: 5 }}>
+                            {recipe.title}
+                    </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites" onClick={handleLike}>
+                        <FavoriteIcon className={likedByCurrentUser ? classes.disabledLikeButton : ""} />
+                    </IconButton>
+                    <Typography>{recipe.likes?.length}</Typography>
+                </CardActions>
+            </Card>
+
     );
 }

@@ -34,7 +34,7 @@ function App() {
               <Route path='/signup' component={SignUp} />
               <Route path='/login' component={Login} />
               <PrivateRoute path='/profile' component={Profile} />
-              <Route path='/view-recipe' component={ViewRecipe} />
+              <Route path='/view-recipe/:recipeId' component={ViewRecipe} />
               <PrivateRoute path='/new-recipe' component={CreateRecipe} />
             </Switch>
           </AuthenticationProvider>

@@ -9,14 +9,19 @@ export default function useAllRecipesFromDB() {
     
     useEffect(() => {
         const recipeRef = firebase.database().ref("recipes");
-        recipeRef.on('value', snapshot => {
+        const onRecipesUpdated = snapshot => {
             const recipes = snapshot.val();
             const recipesList = [];
             for (let id in recipes) {
                 recipesList.push({...recipes[id], id});
             }
             setRecipes(recipesList.reverse());
-        });
+        };
+        recipeRef.on('value', onRecipesUpdated);
+
+        return () => {
+            recipeRef.off('value', onRecipesUpdated);
+        };
     }, [])
 
     return recipes;
