@@ -3,7 +3,8 @@ import {
     Container,
     Grid,
     Typography,
-    TextField
+    TextField,
+    makeStyles
 } from '@material-ui/core';
 import React, { useState, useContext, useRef } from 'react';
 import firebase from 'firebase/app';
@@ -14,6 +15,22 @@ import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom'
 import NavigationBar from '../NavigationBar/NavigationBar';
 import LoadingScreen from '../LoadingScreen';
+import background from "../../img/2.jpg";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        background: `url(${background}) no-repeat center center fixed`,
+        backgroundSize: "cover",
+        minHeight: '100vh'
+    },
+    textFields: {
+        background: "#faf8fb"
+    },
+    buttons: {
+        display: "flex",
+        justifyContent: "space-between"
+    }
+}))
 
 export default function CreateRecipe() {
     const { currentUser } = useContext(AuthenticationContext);
@@ -28,6 +45,7 @@ export default function CreateRecipe() {
     const [fileData, setFileData] = useState();
     const [toggleLoadingScreen, setToggleLoadingScreen] = useState(false);
     const history = useHistory();
+    const classes = useStyles();
 
     function currentDate() {
         const months = [
@@ -85,7 +103,7 @@ export default function CreateRecipe() {
                 authorUid: currentUser.uid,
                 likes: [],
                 savedBy: []
-            }).then((savedRecipeRef)=> {
+            }).then((savedRecipeRef) => {
                 if (fileData) {
                     //------------- Upload the files to the storage -------------
                     const storageRef = firebase.storage().ref(`${currentUser.uid}/${savedRecipeRef.key}`);
@@ -129,98 +147,105 @@ export default function CreateRecipe() {
     }
 
     return (
-        <>
+        <div className={classes.root}>
             {toggleLoadingScreen ? <LoadingScreen toggle={toggleLoadingScreen} /> : ""}
             <NavigationBar />
             <Container component="form" onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     {/* Title */}
-                    <Grid item xs={12} style={{ margin: 15 }}>
+                    <Grid item xs={12} style={{ marginTop: 10 }}>
                         <Typography component='h1' variant='h5'>
                             Create a new Recipe
                         </Typography>
                     </Grid>
                     {/* Dish info */}
-                    <Grid item xs={12} md={6}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="title"
-                                    name="title"
-                                    label="Title"
-                                    onChange={handleChange}
-                                    value={formData.title}
-                                />
-                            </Grid>
+                    <Grid item container xs={12} md={6} spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes.textFields}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="title"
+                                name="title"
+                                label="Title"
+                                onChange={handleChange}
+                                value={formData.title}
+                            />
+                        </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="description"
-                                    name="description"
-                                    label="Dish Description"
-                                    multiline
-                                    rowsMax={15}
-                                    rows={10}
-                                    onChange={handleChange}
-                                    value={formData.description}
-                                />
-                            </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes.textFields}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="description"
+                                name="description"
+                                label="Dish Description"
+                                multiline
+                                rowsMax={8}
+                                rows={8}
+                                onChange={handleChange}
+                                value={formData.description}
+                            />
+                        </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    id="ingreedientsList"
-                                    name="ingreedientsList"
-                                    label="Ingreedients List"
-                                    multiline
-                                    rowsMax={10}
-                                    rows={10}
-                                    onChange={handleChange}
-                                    value={formData.ingreedientsList}
-                                />
-                            </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes.textFields}
+                                variant="outlined"
+                                fullWidth
+                                id="ingreedientsList"
+                                name="ingreedientsList"
+                                label="Ingreedients List"
+                                multiline
+                                rowsMax={8}
+                                rows={8}
+                                onChange={handleChange}
+                                value={formData.ingreedientsList}
+                            />
+                        </Grid>
 
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    id="cookingInstructions"
-                                    name="cookingInstructions"
-                                    label="Cooking instructions"
-                                    multiline
-                                    rowsMax={10}
-                                    rows={10}
-                                    onChange={handleChange}
-                                    value={formData.cookingInstructions}
-                                />
-                            </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                className={classes.textFields}
+                                variant="outlined"
+                                fullWidth
+                                id="cookingInstructions"
+                                name="cookingInstructions"
+                                label="Cooking instructions"
+                                multiline
+                                rowsMax={10}
+                                rows={10}
+                                onChange={handleChange}
+                                value={formData.cookingInstructions}
+                            />
+                        </Grid>
+
+                        <Grid item container justify="flex-end">
                             <Grid item>
                                 <input type="file" ref={inputRef} style={{ display: "none" }} onChange={handleFileUploadData} />
-                                <Button onClick={triggerFileUpload}>Upload Image</Button>
+                                <Button
+                                    onClick={triggerFileUpload}
+                                    variant="outlined"
+                                    color="secondary"
+                                >
+                                    Upload Cover Image
+                                </Button>
+                                <Button
+                                    style={{ marginLeft: 10 }}
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    Publish Recipe
+                                    </Button>
                             </Grid>
                         </Grid>
                     </Grid>
-                    {/* Submit Button  */}
-                    <Grid item container xs={12}>
-                        <Button
-                            style={{ marginBottom: 5 }}
-                            type="submit"
-                            fullWidth
-                            variant="outlined"
-                            color="primary"
-                        >
-                            Publish Recipe
-                        </Button>
-                    </Grid>
                 </Grid>
             </Container>
-        </>
+        </div>
     )
 }
