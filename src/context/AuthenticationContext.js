@@ -36,9 +36,10 @@ export default function AuthenticationProvider({ children }) {
             })
         })
     }
-
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password);
+        return auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+            return auth.signInWithEmailAndPassword(email, password);
+        });
     }
 
     function logout() {
