@@ -177,7 +177,7 @@ export default function Login() {
               variant="outlined"
               color="secondary"
             >
-              Send pasword reset email
+              Reset password
           </Button>
           </CardActions>
         </Card>
