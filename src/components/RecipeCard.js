@@ -83,7 +83,7 @@ export default function RecipeCard({ recipe }) {
                 title={recipe.title}
                 subheader={recipe.date}
                 action={
-                    <SaveRecipeDropdown recipe={recipe} />
+                    currentUser && <SaveRecipeDropdown recipe={recipe} />
                 }
                 titleTypographyProps={
                     {
