@@ -22,6 +22,11 @@
     padding: none;
     width: 145px;
     height: 38px;
+    transition: all .2s ease-in-out;
+}
+
+.logo:hover {
+    transform: scale(1.1);
 }
 
 .search-bar {
