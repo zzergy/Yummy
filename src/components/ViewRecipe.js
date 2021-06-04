@@ -3,19 +3,33 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import useRecipeFromDb from '../useRecipeFromDB';
 import NavigationBar from './NavigationBar/NavigationBar';
-import Button from '@material-ui/core/Button';
+import Footer from './Footer';
+import "./Home.css"
+import ScroolToTopArrow from './ScrollToTopButton';
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(4)
-    },
     recipeImage: {
         maxWidth: '700px',
-        height: 'auto'
+        width: "100%",
+        height: 'auto',
+
+        border: " 1px solid #ddd",
+        borderRadius: "4px",
+        padding: "6px",
+        boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
     },
     recipeImageContainer: {
         display: 'flex',
         justifyContent: 'center'
+    },
+    listContainer: {
+        background: "#fff7c7",
+        boxShadow: "0 1px 1px #e6ddae, 0 10px 0 -5px #e6ddae, 0 10px 1px -4px #e6ddae, 0 20px 0 -10px #d9cf9c, 0 20px 1px -9px rgba(0,0,0,0.15)",
+        padding: "30px",
+        maxWidth: "auto"
+    },
+    paper: {
+        padding: theme.spacing(4),
     }
 }));
 
@@ -26,47 +40,62 @@ export default function ViewRecipe() {
 
     return (
         <>
+            <ScroolToTopArrow />
             <NavigationBar />
-            <Container className={classes.container}>
-            <Grid container spacing={4}>
-                <Grid item xs={12}>
-                    <Link to="/">
-                        <Button color="primary">
-                        Back to all recipies
-                        </Button>
-                    </Link>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography align="center" variant="h2">
-                        {recipe?.title}
-                    </Typography>
-                </Grid>
-                <Grid className={classes.recipeImageContainer} item xs={12}>
-                    <img className={classes.recipeImage} src={recipe?.imageUrl} />
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Typography variant="h4">
-                        Ingridients
+            <Container className={classes.root}>
+                <Grid container spacing={4}>
+                    {/* Title */}
+                    <Grid item xs={12}>
+                        <Typography
+                            align="center"
+                            variant="h2"
+                        >
+                            {recipe?.title}
                         </Typography>
-                    <ul>
-                        {recipe?.ingreedientsList?.split('\n').map((ingridient => (
-                            <li>
-                                <Typography variant="body1">{ingridient}</Typography>
-                            </li>
-                        )))}
-                    </ul>
-                </Grid>
+                    </Grid>
 
-                <Grid item xs={12}>
-                    {recipe?.cookingInstructions?.split('\n').map((instruction => (
-                        <><Typography variant="body1">{instruction}</Typography><br/></>
-                    )))}
+                    {/* Dish image */}
+                    <Grid item className={classes.recipeImageContainer} xs={12}>
+                        <img className={classes.recipeImage} alt="dish" src={recipe?.imageUrl} />
+                    </Grid>
+
+                    <Grid item container spacing={3}>
+                        {/* Inggredients list */}
+                        <Grid item xs={12} lg={6} >
+                            <Paper className={classes.paper}>
+                                <Typography variant="h5" style={{ marginBottom: 20 }}>
+                                    Ingredients
+                                </Typography>
+                                <ul>
+                                    {recipe?.ingreedientsList?.split('\n').map(((ingridient, index) => (
+                                        <li key={index}>
+                                            <Typography variant="body1">{ingridient}</Typography>
+                                        </li>
+                                    )))}
+                                </ul>
+                            </Paper>
+                        </Grid>
+
+                        {/* Cooking instructions */}
+                        <Grid item xs={12} lg={6}>
+                            <Paper className={classes.paper}>
+                                <Typography variant="h5" style={{ marginBottom: 20 }}>
+                                    Cooking instructions
+                                </Typography>
+
+                                {recipe?.cookingInstructions?.split('\n').map(((instruction, index) => (
+                                    <div key={index}><Typography variant="body1" >{instruction}</Typography><br /></div>
+                                )))}
+                            </Paper>
+                        </Grid>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </Container>
+            <div className='footer'>
+                <Footer />
+            </div>
         </>
-       
+
 
     );
 }
