@@ -7,7 +7,7 @@ import ViewRecipe from './components/ViewRecipe';
 import 'fontsource-roboto';
 import AuthenticationProvider from './context/AuthenticationContext';
 import { SnackbarProvider } from 'notistack';
-import CreateRecipe from './components/CreateRecipe/CreateRecipe';
+import CreateRecipe from './components/CreateRecipe';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import indigo from "@material-ui/core/colors/indigo";
 import PrivateRoute from './components/PrivateRoute';

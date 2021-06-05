@@ -10,12 +10,12 @@ import React, { useState, useContext, useRef } from 'react';
 import firebase from 'firebase/app';
 import "firebase/storage"
 import "firebase/database";
-import { AuthenticationContext } from '../../context/AuthenticationContext';
+import { AuthenticationContext } from '../context/AuthenticationContext';
 import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom'
-import NavigationBar from '../NavigationBar/NavigationBar';
-import LoadingScreen from '../LoadingScreen';
-import background from "../../img/2.jpg";
+import NavigationBar from './NavigationBar/NavigationBar';
+import LoadingScreen from './LoadingScreen';
+import background from "../img/2.jpg";
 
 const useStyles = makeStyles(theme => ({
     root: {
