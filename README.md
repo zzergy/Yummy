@@ -1,6 +1,6 @@
 ![Logo](https://i.imgur.com/0iERahm.png)
 
-# Welcome to Yummy! Where you can share your tasty recipes with others :ramen:
+# Welcome to [Yummy](https://zzergy.github.io/Yummy/#/)! Where you can share your tasty recipes with others :ramen:
 
 ## Some previews :pizza:
 
