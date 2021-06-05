@@ -1,17 +1,24 @@
 import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import './NavigationBar.css';
 import logo from '../logo.png';
-import { Avatar, makeStyles, TextField } from '@material-ui/core';
+import { Avatar, Button, makeStyles, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     avatar: {
         height: theme.spacing(5),
         width: theme.spacing(5),
         backgroundColor: theme.palette.primary.main,
+    },
+    logoContainer: {
+        display: "flex",
+        justifyContent: "center",
+
+    },
+    createRecipeButton: {
+        marginLeft: "1vw"
     }
 }))
 
@@ -56,6 +63,7 @@ export default function NavigationBar({ handleSearch }) {
             const firstLetter = currentUser?.displayName?.charAt(0).toUpperCase();
             return (
                 <>
+
                     <button onClick={handleLogout} className='logout-button'>Log Out</button>
                     <Link to="/profile" style={{ textDecoration: 'none' }}>
                         <Avatar
@@ -82,7 +90,21 @@ export default function NavigationBar({ handleSearch }) {
 
     return (
         <div className={navigationBarStyles ? "nav scrolled" : "nav"}>
-            <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
+            <div className={classes.logoContainer}>
+                <Link to='/'><img src={logo} alt='logo' className='logo' /></Link>
+                {(currentUser && location.pathname !== "/profile") &&
+                    <Link to="new-recipe">
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            className={classes.createRecipeButton}
+                        >
+                            Create a recipe
+                        </Button>
+                    </Link>
+                }
+            </div>
+
             {location.pathname === "/" &&
                 <TextField
                     size="small"
@@ -90,6 +112,7 @@ export default function NavigationBar({ handleSearch }) {
                     label="Search.."
                     onChange={onSearchValueChange}
                     value={searchTerm}
+                    className="search-bar"
                 />}
             <div className="user-info-wrapper">{userNavigationButton()}</div>
         </div>
