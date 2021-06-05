@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import './NavigationBar.css';
-import logo from '../logo.png';
+import logo from '../../img/logo.png';
 import { Avatar, Button, makeStyles, TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 
