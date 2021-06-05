@@ -78,29 +78,30 @@ export default function SaveRecipeDropdown({ recipe }) {
                 <MoreVertIcon />
             </IconButton>
 
-            {currentUser ? <Popover
-                open={!!anchorElement}
-                anchorEl={anchorElement}
-                onClose={handleExitPopUp}
-                disableRestoreFocus
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuItem onClick={saveRecipe}>Save</MenuItem>
-                {currentUser?.uid === recipe.authorUid &&
-                    <>
-                        <MenuItem>Edit</MenuItem>
-                        <MenuItem onClick={deleteRecipe}>Delete</MenuItem>
-                    </>
-                }
+            {currentUser ?
+                <Popover
+                    open={!!anchorElement}
+                    anchorEl={anchorElement}
+                    onClose={handleExitPopUp}
+                    disableRestoreFocus
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <MenuItem onClick={saveRecipe}>Save</MenuItem>
+                    {currentUser?.uid === recipe.authorUid &&
+                        <>
+                            <MenuItem>Edit</MenuItem>
+                            <MenuItem onClick={deleteRecipe}>Delete</MenuItem>
+                        </>
+                    }
 
-            </Popover> : ""}
+                </Popover> : ""}
         </div>
     )
 }

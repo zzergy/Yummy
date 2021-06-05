@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
     recipeContainer: {
         display: "flex",
-        justifyContent:"space-evenly"
+        justifyContent: "space-evenly"
     }
 }));
 
@@ -41,13 +41,15 @@ export default function Home() {
                     <Grid container spacing={8} className={classes.recipeContainer}>
                         {filteredRecipes.map((recipe, index) => {
                             const lgWidth = filteredRecipes.length === 1 ? 12 : 4;
-                            return <Grid item container justify="center" xs={12} md={6} lg={lgWidth} key={index} >
+                            return (
+                                <Grid item container justify="center" xs={12} md={6} lg={lgWidth} key={index} >
                                     <Grid item>
                                         <div className={classes.recipeCard}>
                                             <RecipeCard recipe={recipe} />
                                         </div>
                                     </Grid>
-                                </Grid>;
+                                </Grid>
+                            )
                         })}
                     </Grid>
                 </Container>

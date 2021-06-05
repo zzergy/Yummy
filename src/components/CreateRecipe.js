@@ -1,3 +1,4 @@
+import React, { useState, useContext, useRef } from 'react';
 import {
     Button,
     Container,
@@ -6,7 +7,6 @@ import {
     TextField,
     makeStyles
 } from '@material-ui/core';
-import React, { useState, useContext, useRef } from 'react';
 import firebase from 'firebase/app';
 import "firebase/storage"
 import "firebase/database";
@@ -223,7 +223,7 @@ export default function CreateRecipe() {
                                     color="primary"
                                 >
                                     Publish Recipe
-                                    </Button>
+                                </Button>
                             </Grid>
                         </Grid>
                     </Grid>

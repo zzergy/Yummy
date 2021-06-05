@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Avatar, Typography, Card, Button } from '@material-ui/core';
+import { Avatar, Typography, Card, Button, makeStyles } from '@material-ui/core';
 import { AuthenticationContext } from "../../context/AuthenticationContext";
-import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ChangePassword from "../ChangePassword"
 
@@ -78,7 +77,7 @@ export default function ProfileCard({ recipesCount, likeCount }) {
                             color="primary"
                         >
                             Create a Recipe
-                    </Button>
+                        </Button>
                     </Link>
                     <ChangePassword />
                 </div>

@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import firebase from 'firebase/app';
 import "firebase/database";
 /**
- * Gets the data from the Firebase Realtime Database 
+ * Gets all of the recipes from the Firebase Realtime Database 
  */
 export default function useAllRecipesFromDB() {
     const [recipes, setRecipes] = useState([]);

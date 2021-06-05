@@ -1,3 +1,4 @@
+import React, { useContext, useState } from 'react';
 import {
     Modal,
     Button,
@@ -13,7 +14,6 @@ import {
     CardHeader,
     CardActions
 } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { useSnackbar } from 'notistack';
 import { AuthenticationContext } from '../context/AuthenticationContext';

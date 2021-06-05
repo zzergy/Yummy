@@ -1,6 +1,6 @@
-import { Container, Typography, makeStyles, Grid, Paper } from '@material-ui/core';
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Container, Typography, makeStyles, Grid, Paper } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
 import useRecipeFromDb from '../useRecipeFromDB';
 import NavigationBar from './NavigationBar/NavigationBar';
 import Footer from './Footer';
